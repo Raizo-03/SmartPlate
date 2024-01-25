@@ -23,6 +23,8 @@ public class LoginForm {
 	private JButton btnConnect;
     private JPanel loginPanel;
     private JPanel signUpPanel;
+    private JPanel signupSucess;
+
     private JTextField txtUsername;
     private JPasswordField txtPassword;
     
@@ -115,7 +117,7 @@ public class LoginForm {
         //ADDITIONAL PANELS
         loginPanel = createLoginPanel();
         signUpPanel =  createSignUpPanel();
-        
+        signupSucess = createWelcomePanel();
         
 	}
 	
@@ -266,7 +268,7 @@ public class LoginForm {
             		if (!txtSignUpUsername.getText().equals("")) {
             	    	if (!txtSignPassword.getText().equals("")) {
             	    		
-            	    		if (insertUser(email, name, username, password)) showLoginPanel();
+            	    		if (insertUser(email, name, username, password)) showWelcomePanel();
             	    		else return;
 
             	    	  }else {
@@ -426,8 +428,24 @@ public class LoginForm {
             return false;
         }
     }
-
     
+    private JPanel createWelcomePanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\signupSuccess.png");
+        panel.setLayout(null);
+        panel.setBounds(0, 0, 940, 788);
+    	
+    	return panel;
+    }
+    private void showWelcomePanel() {
+        frame.getContentPane().remove(firstPanel);
+        frame.getContentPane().remove(firstPanel_1);
+        frame.getContentPane().remove(loginPanel);
+        frame.getContentPane().remove(signUpPanel);
+        frame.getContentPane().add(signupSucess);
+        frame.revalidate();
+        frame.repaint();
+              
+    }
     private void showLoginPanel() {
         frame.getContentPane().remove(firstPanel);
         frame.getContentPane().remove(firstPanel_1);
@@ -435,8 +453,7 @@ public class LoginForm {
         frame.getContentPane().remove(signUpPanel);
         frame.revalidate();
         frame.repaint();
-        
-                    
+              
     }
     private void showSignUpPanel() {
         frame.getContentPane().remove(firstPanel);
