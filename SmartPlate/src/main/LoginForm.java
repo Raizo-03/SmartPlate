@@ -126,7 +126,34 @@ public class LoginForm {
         
         JButton signupButton = new JButton("SIGN-IN");
         signupButton.setBounds(386, 391, 144, 40);
-        
+        signupButton.addActionListener(new ActionListener() {
+            @Override
+            
+            public void actionPerformed(ActionEvent e) {
+                String username = txtUsername.getText();
+                String password = new String(((JPasswordField) txtPassword).getPassword());
+                User authenticatedUser = UserAuthentication.authenticateUser(username, password);
+
+                if (!username.isEmpty() && !password.isEmpty()) {
+                    if (validateLogin(username, password)) {
+                        // Successful login
+                        // Perform any additional actions or navigate to the main application
+                    	JOptionPane.showMessageDialog(frame, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        SessionManager.createSession(authenticatedUser);
+                        DashboardForm dashboard = new DashboardForm(authenticatedUser);
+                    	dashboard.Show();
+                    	frame.dispose();
+
+                    } else {
+                        // Invalid credentials
+                        JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    // Missing username or password
+                    JOptionPane.showMessageDialog(frame, "Please enter both username and password", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         txtUsername = new JTextField();
         txtUsername.setText("");
         txtUsername.setColumns(10);
@@ -178,11 +205,31 @@ public class LoginForm {
             @Override
             
             public void actionPerformed(ActionEvent e) {
-                
-            	
-                
+                String username = txtUsername.getText();
+                String password = new String(((JPasswordField) txtPassword).getPassword());
+                User authenticatedUser = UserAuthentication.authenticateUser(username, password);
+
+                if (!username.isEmpty() && !password.isEmpty()) {
+                    if (validateLogin(username, password)) {
+                        // Successful login
+                        // Perform any additional actions or navigate to the main application
+                    	JOptionPane.showMessageDialog(frame, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        SessionManager.createSession(authenticatedUser);
+                        DashboardForm dashboard = new DashboardForm(authenticatedUser);
+                    	dashboard.Show();
+                    	frame.dispose();
+
+                    } else {
+                        // Invalid credentials
+                        JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    // Missing username or password
+                    JOptionPane.showMessageDialog(frame, "Please enter both username and password", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
+
 
         btnExit = new JButton("BACK");
         btnExit.addActionListener(new ActionListener() {
@@ -286,7 +333,7 @@ public class LoginForm {
         try {
             // Use the DatabaseConnection class to obtain a connection
             DatabaseConnection databaseConnection = new DatabaseConnection();
-            Connection connection = databaseConnection.getConnection();
+            Connection connection = DatabaseConnection.getConnection();
 
             // Check if the username already exists
             if (isUsernameTaken(connection, username)) {
@@ -358,7 +405,28 @@ public class LoginForm {
         return false;
     }
 	
-    
+    private boolean validateLogin(String username, String password) {
+        try {
+            // Use the DatabaseConnection class to obtain a connection
+            Connection connection = DatabaseConnection.getConnection();
+
+            // Prepare the SQL statement for login validation
+            String sql = "SELECT * FROM UserAccounts WHERE username=? AND password=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+
+                // Execute the SQL statement
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    return resultSet.next(); // If a row is returned, the login is valid
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     
     private void showLoginPanel() {
         frame.getContentPane().remove(firstPanel);
@@ -389,7 +457,7 @@ public class LoginForm {
     
 
 	   
-    private static class ImagePanel extends JPanel {
+    public static class ImagePanel extends JPanel {
         private final ImageIcon imageIcon;
 
         public ImagePanel(String imagePath) {
