@@ -78,26 +78,35 @@ public class LoginForm {
         frame.getContentPane().add(firstPanel_1);
         firstPanel_1.setLayout(null);
         
-        JButton btnLogIn = new JButton("Log In");
+        JButton btnLogIn = new JButton("");
+        btnLogIn.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnLoginIcon.png"));
         btnLogIn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {   		
             	showLoginPanel();
 
         	}
         });
-        btnLogIn.setBounds(304, 555, 93, 40);
+        btnLogIn.setOpaque(false);
+        btnLogIn.setContentAreaFilled(false);
+        btnLogIn.setBorderPainted(false);
+        btnLogIn.setBounds(299, 543, 106, 52);
         firstPanel_1.add(btnLogIn);
         
-        btnSignUp = new JButton("Sign Up");
+        btnSignUp = new JButton("");
+        btnSignUp.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSignupIcon.png"));
         btnSignUp.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		showSignUpPanel();
         	}
         });
-        btnSignUp.setBounds(504, 555, 93, 40);
+        btnSignUp.setBounds(493, 543, 106, 52);
         firstPanel_1.add(btnSignUp);
+        btnSignUp.setOpaque(false);
+        btnSignUp.setContentAreaFilled(false);
+        btnSignUp.setBorderPainted(false);
         
-        btnExit = new JButton("EXIT");
+        btnExit = new JButton("");
+        btnExit.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnExitIcon.png"));
         btnExit.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                 System.exit(0);
@@ -105,13 +114,20 @@ public class LoginForm {
                 
         	}
         });
-        btnExit.setBounds(809, 705, 93, 40);
+        btnExit.setBounds(809, 705, 106, 52);
         firstPanel_1.add(btnExit);
+        btnExit.setOpaque(false);
+        btnExit.setContentAreaFilled(false);
+        btnExit.setBorderPainted(false);
         
-        btnConnect = new JButton("CONNECT WITH US");
+        btnConnect = new JButton("");
+        btnConnect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnConnectIcon.png"));
         btnConnect.setFont(new Font("Tahoma", Font.PLAIN, 9));
-        btnConnect.setBounds(783, 128, 135, 58);
+        btnConnect.setBounds(783, 128, 135, 66);
         firstPanel_1.add(btnConnect);
+        btnConnect.setOpaque(false);
+        btnConnect.setContentAreaFilled(false);
+        btnConnect.setBorderPainted(false);
         
         
         //ADDITIONAL PANELS
