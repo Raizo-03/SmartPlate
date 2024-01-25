@@ -1,6 +1,8 @@
 package main;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -135,6 +137,35 @@ public class DashboardForm {
         nameLabel = new JLabel("");
         nameLabel.setBounds(645, 11, 174, 25);
         panel.add(nameLabel);
+        
+        ImageIcon btnrightIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnRightIcon.png");
+        JButton btnRight = new JButton(btnrightIcon);	
+        btnRight.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		System.out.println("Clicked!");
+        	}
+        });
+        btnRight.setBounds(579, 465, 60, 53);
+        frame.getContentPane().add(btnRight);
+        // Make the button non-opaque
+        btnRight.setOpaque(false);
+
+        // Make the button's content area transparent
+        btnRight.setContentAreaFilled(false);
+
+        // Make the button's border transparent
+        btnRight.setBorderPainted(false);
+        
+        ImageIcon btnleftIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnLeftIcon.png");
+
+        JButton btnLeft = new JButton(btnleftIcon);
+        btnLeft.setOpaque(false);
+        btnLeft.setContentAreaFilled(false);
+        btnLeft.setBorderPainted(false);
+        btnLeft.setBounds(237, 465, 60, 53);
+        frame.getContentPane().add(btnLeft);
+        panel.add(btnLeft);
+        panel.add(btnRight);
 
         return panel;
     }
