@@ -12,6 +12,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.io.File;
+import java.io.IOException;
+import java.awt.event.FocusAdapter;
+import java.awt.geom.RoundRectangle2D;
+
+
 
 public class LoginForm {
 
@@ -26,7 +32,7 @@ public class LoginForm {
     private JPanel signupSucess;
 
     private JTextField txtUsername;
-    private JPasswordField txtPassword;
+    private JTextField txtPassword;
     
     private JTextField txtSignUpName;
     private JTextField txtSignUpEmail;
@@ -71,6 +77,7 @@ public class LoginForm {
         ImageIcon AppIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\SmartPlateLogo1.png");
         frame.setIconImage(AppIcon.getImage());
   
+        
         
         firstPanel = new JPanel(null);
         firstPanel.setLayout(null);
@@ -142,9 +149,13 @@ public class LoginForm {
         panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\Signin.png");
         panel.setLayout(null);
         
-        JButton signupButton = new JButton("SIGN-IN");
-        signupButton.setBounds(386, 391, 144, 40);
-        signupButton.addActionListener(new ActionListener() {
+        JButton btnSignin = new JButton("SIGN-IN");
+        btnSignin.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSigninIcon.png"));
+        btnSignin.setBounds(355, 510, 206, 60);
+        btnSignin.setOpaque(false);
+        btnSignin.setContentAreaFilled(false);
+        btnSignin.setBorderPainted(false);
+        btnSignin.addActionListener(new ActionListener() {
             @Override
             
             public void actionPerformed(ActionEvent e) {
@@ -172,12 +183,31 @@ public class LoginForm {
                 }
             }
         });
-        txtUsername = new JTextField();
+
+
+        txtUsername = createRoundedTextField(10);
         txtUsername.setText("");
         txtUsername.setColumns(10);
-        txtUsername.setBounds(340, 287, 237, 40);
+        txtUsername.setBounds(340, 300, 237, 40);
+        txtUsername.setForeground(new Color(255, 202, 110));
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(21f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            txtUsername.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         
         final String userNplaceholder = "  username";
+        txtUsername.setText(userNplaceholder); // Set initial placeholder text
         // Add a focus listener to handle placeholder behavior
         txtUsername.addFocusListener(new FocusListener() {
 			@Override
@@ -195,58 +225,61 @@ public class LoginForm {
 			}
         });
         
-        txtPassword = new JPasswordField();
-        txtPassword.setText("password");
-        txtPassword.setColumns(10);
-        txtPassword.setBounds(340, 340, 237, 40);
+        JButton btnSignup = new JButton();
+        btnSignup.setBounds(355, 680, 206, 60);
+        btnSignup.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\signupIcon.png"));
+        btnSignup.setOpaque(false);
+        btnSignup.setContentAreaFilled(false);
+        btnSignup.setBorderPainted(false);
+        btnSignup.addActionListener(new ActionListener() {
+        	@Override
+			public void actionPerformed(ActionEvent e) {
+        		showSignUpPanel();				
+			}
+        	
+        });
+
         
-        final String userPassplaceholder = "  password";
+        txtPassword = createRoundedTextField1(10);
+        ((JPasswordField) txtPassword).setEchoChar((char) 0); // Initially display normal text
+        txtPassword.setColumns(10);
+        txtPassword.setBounds(340, 380, 237, 40);
+        txtPassword.setForeground(new Color(255, 202, 110));
+        try {
+   			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(21f);
+               // Register the font with the Graphics Environment
+               GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+               ge.registerFont(font);
+               txtPassword.setFont(font);
+               
+
+   		} catch (FontFormatException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		} catch (IOException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		}
+        final String userPassPlaceholder = "  password";
+        txtPassword.setText(userPassPlaceholder); // Set initial placeholder text
         // Add a focus listener to handle placeholder behavior
-        txtPassword.addFocusListener(new FocusListener() {
-			@Override
-			public void focusGained(FocusEvent e) {
-			    if (txtPassword.getText().equals(userPassplaceholder)) {
-			    	txtPassword.setText("");
-                }				
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				   if (txtPassword.getText().isEmpty()) {
-					   txtPassword.setText(userPassplaceholder);
-	                }				
-			}
-        });
+        txtPassword.addFocusListener(new FocusAdapter() {
+         @Override
+         public void focusGained(FocusEvent e) {
+             if (new String(((JPasswordField) txtPassword).getPassword()).equals(userPassPlaceholder)) {
+                 txtPassword.setText("");
+                 ((JPasswordField) txtPassword).setEchoChar('•'); // Use dots for password characters
+             }
+         }
 
-        JButton logInButton = new JButton("Log In");
-        logInButton.setBounds(127, 404, 93, 30);
-        logInButton.addActionListener(new ActionListener() {
-            @Override
-            
-            public void actionPerformed(ActionEvent e) {
-                String username = txtUsername.getText();
-                String password = new String(((JPasswordField) txtPassword).getPassword());
-                User authenticatedUser = UserAuthentication.authenticateUser(username, password);
-
-                if (!username.isEmpty() && !password.isEmpty()) {
-                    if (validateLogin(username, password)) {
-                        // Successful login
-                        // Perform any additional actions or navigate to the main application
-                    	JOptionPane.showMessageDialog(frame, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
-                        SessionManager.createSession(authenticatedUser);
-                        DashboardForm dashboard = new DashboardForm(authenticatedUser);
-                    	dashboard.Show();
-                    	frame.dispose();
-
-                    } else {
-                        // Invalid credentials
-                        JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                } else {
-                    // Missing username or password
-                    JOptionPane.showMessageDialog(frame, "Please enter both username and password", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
+         @Override
+         public void focusLost(FocusEvent e) {
+             if (new String(((JPasswordField) txtPassword).getPassword()).isEmpty()) {
+                 ((JPasswordField) txtPassword).setEchoChar((char) 0); // Show normal text
+                 txtPassword.setText(userPassPlaceholder);
+             }
+         }
+     });
 
 
         btnExit = new JButton("BACK");
@@ -258,19 +291,78 @@ public class LoginForm {
         });
         btnExit.setBounds(809, 705, 93, 40);
         
-        panel.add(signupButton);
+        panel.add(btnSignin);
+        panel.add(btnSignup);
         panel.add(txtUsername);
         panel.add(txtPassword);
-        panel.add(btnExit);
 		return panel;
     }
+	//FOR MAKING THE TEXTFIELD ROUND 
+	  public static JTextField createRoundedTextField(int columns) {
+	        JTextField textField = new JTextField(columns) {
+	            private Shape shape;
+	            @Override
+	            protected void paintComponent(Graphics g) {
+	                g.setColor(getBackground());
+	                g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+	                super.paintComponent(g);
+	            }
+	            @Override
+	            protected void paintBorder(Graphics g) {
+	                g.setColor(getForeground());
+	                g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+	            }
+	            @Override
+	            public boolean contains(int x, int y) {
+	                if (shape == null || !shape.getBounds().equals(getBounds())) {
+	                    shape = new RoundRectangle2D.Float(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+	                }
+	                return shape.contains(x, y);
+	            }
+	        };
+	        textField.setOpaque(false);
+	        textField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+	        return textField;
+	    }
+	  public static JPasswordField createRoundedTextField1(int columns) {
+		  JPasswordField textField = new JPasswordField(columns) {
+	            private Shape shape;
+	            @Override
+	            protected void paintComponent(Graphics g) {
+	                g.setColor(getBackground());
+	                g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+	                super.paintComponent(g);
+	            }
+	            @Override
+	            protected void paintBorder(Graphics g) {
+	                g.setColor(getForeground());
+	                g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+	            }
+	            @Override
+	            public boolean contains(int x, int y) {
+	                if (shape == null || !shape.getBounds().equals(getBounds())) {
+	                    shape = new RoundRectangle2D.Float(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+	                }
+	                return shape.contains(x, y);
+	            }
+	        };
+	        textField.setOpaque(false);
+	        textField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+	        return textField;
+	    }
 	
+	
+	  
     private JPanel createSignUpPanel() {
         JPanel panel = new JPanel(null); // Use a layout manager
         panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\Signup.png");
         panel.setLayout(null);
         JButton BtnSignUp = new JButton("SIGN-UP");
-        BtnSignUp.setBounds(394, 507, 144, 40);
+        BtnSignUp.setBounds(365, 540, 206, 60);
+        BtnSignUp.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\signupIcon.png"));
+        BtnSignUp.setOpaque(false);
+        BtnSignUp.setContentAreaFilled(false);
+        BtnSignUp.setBorderPainted(false);
         BtnSignUp.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		
