@@ -66,13 +66,13 @@ public class LoginForm {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setUndecorated(true);
-        ImageIcon AppIcon = new ImageIcon("C:\\Users\\MSI\\eclipse-workspace\\SmartPlate\\src\\assets\\SmartPlateLogo1.png");
+        ImageIcon AppIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\SmartPlateLogo1.png");
         frame.setIconImage(AppIcon.getImage());
   
         
         firstPanel = new JPanel(null);
         firstPanel.setLayout(null);
-        firstPanel_1 = new ImagePanel("C:\\Users\\MSI\\eclipse-workspace\\SmartPlate\\src\\assets\\LogInFrame.png");
+        firstPanel_1 = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\LogInFrame.png");
         frame.getContentPane().add(firstPanel_1);
         firstPanel_1.setLayout(null);
         
@@ -121,7 +121,7 @@ public class LoginForm {
 	
 	private JPanel createLoginPanel() {
         JPanel panel = new JPanel(null); // Use null layout
-        panel = new ImagePanel("C:\\Users\\MSI\\eclipse-workspace\\SmartPlate\\src\\assets\\Signin.png");
+        panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\Signin.png");
         panel.setLayout(null);
         
         JButton signupButton = new JButton("SIGN-IN");
@@ -202,7 +202,7 @@ public class LoginForm {
 	
     private JPanel createSignUpPanel() {
         JPanel panel = new JPanel(null); // Use a layout manager
-        panel = new ImagePanel("C:\\Users\\MSI\\eclipse-workspace\\SmartPlate\\src\\assets\\SignUp.png");
+        panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\Signup.png");
         panel.setLayout(null);
         JButton BtnSignUp = new JButton("SIGN-UP");
         BtnSignUp.setBounds(394, 507, 144, 40);
