@@ -698,7 +698,7 @@ public class LoginForm {
         btnNext.setContentAreaFilled(false);
         btnNext.setBorderPainted(false);
         
-        panel.add(btnNext); // Add the button to the panel
+        panel.add(btnNext); 
 
     	
     	return panel;
