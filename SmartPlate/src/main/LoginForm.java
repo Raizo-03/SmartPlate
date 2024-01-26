@@ -37,7 +37,7 @@ public class LoginForm {
     private JTextField txtSignUpName;
     private JTextField txtSignUpEmail;
     private JTextField txtSignUpUsername;
-    private JPasswordField txtSignPassword;
+    private JTextField txtSignPassword;
     //FOR DATABASE
     DatabaseConnection base = new DatabaseConnection();
 
@@ -297,6 +297,7 @@ public class LoginForm {
         panel.add(txtPassword);
 		return panel;
     }
+	
 	//FOR MAKING THE TEXTFIELD ROUND 
 	  public static JTextField createRoundedTextField(int columns) {
 	        JTextField textField = new JTextField(columns) {
@@ -324,6 +325,8 @@ public class LoginForm {
 	        textField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 	        return textField;
 	    }
+	  
+	  
 	  public static JPasswordField createRoundedTextField1(int columns) {
 		  JPasswordField textField = new JPasswordField(columns) {
 	            private Shape shape;
@@ -358,7 +361,7 @@ public class LoginForm {
         panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\Signup.png");
         panel.setLayout(null);
         JButton BtnSignUp = new JButton("SIGN-UP");
-        BtnSignUp.setBounds(365, 540, 206, 60);
+        BtnSignUp.setBounds(375, 540, 206, 60);
         BtnSignUp.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\signupIcon.png"));
         BtnSignUp.setOpaque(false);
         BtnSignUp.setContentAreaFilled(false);
@@ -398,35 +401,174 @@ public class LoginForm {
         });
         
         
-        txtSignUpName = new JTextField();
+        txtSignUpName = createRoundedTextField(10);
+        txtSignUpName.setForeground(new Color(255, 202, 110));
         txtSignUpName.setText("name");
-        txtSignUpName.setBounds(348, 290, 237, 40);
+        txtSignUpName.setBounds(348, 290, 250, 40);
         txtSignUpName.setColumns(10);
+        try {
+   			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(17f);
+               // Register the font with the Graphics Environment
+               GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+               ge.registerFont(font);
+               txtSignUpName.setFont(font);
+               
+
+   		} catch (FontFormatException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		} catch (IOException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		}
+        final String userNplaceholder = "  name";
+        txtSignUpName.setText(userNplaceholder); // Set initial placeholder text
+        // Add a focus listener to handle placeholder behavior
+        txtSignUpName.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (txtSignUpName.getText().equals(userNplaceholder)) {
+			    	txtSignUpName.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (txtSignUpName.getText().isEmpty()) {
+					   txtSignUpName.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
         
-        txtSignUpEmail = new JTextField();
+        txtSignUpEmail = createRoundedTextField(10);
         txtSignUpEmail.setText("email");
-        txtSignUpEmail.setBounds(348, 341, 237, 40);
+        txtSignUpEmail.setBounds(348, 341, 250, 40);
         txtSignUpEmail.setColumns(10);
+        txtSignUpEmail.setForeground(new Color(255, 202, 110));
+        try {
+    			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(17f);
+                // Register the font with the Graphics Environment
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(font);
+                txtSignUpEmail.setFont(font);
+                
+
+    		} catch (FontFormatException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		} catch (IOException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		}
+        final String useremailPlaceholder = "  email";
+        txtSignUpEmail.setText(useremailPlaceholder); // Set initial placeholder text
+        // Add a focus listener to handle placeholder behavior
+        txtSignUpEmail.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (txtSignUpEmail.getText().equals(useremailPlaceholder)) {
+			    	txtSignUpEmail.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (txtSignUpEmail.getText().isEmpty()) {
+					   txtSignUpEmail.setText(useremailPlaceholder);
+	                	
+	                }				
+			}
+        });
         
-        txtSignUpUsername = new JTextField();
+        
+        txtSignUpUsername = createRoundedTextField(10);
         txtSignUpUsername.setText("username");
         txtSignUpUsername.setColumns(10);
-        txtSignUpUsername.setBounds(348, 392, 237, 40);
+        txtSignUpUsername.setBounds(348, 392, 250, 40);
+        txtSignUpUsername.setForeground(new Color(255, 202, 110));
+        try {
+    			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(17f);
+                // Register the font with the Graphics Environment
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(font);
+                txtSignUpUsername.setFont(font);
+                
+
+    		} catch (FontFormatException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		} catch (IOException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		}
+        final String usernpPlaceholder = "  username";
+        txtSignUpUsername.setText(usernpPlaceholder); // Set initial placeholder text
+        // Add a focus listener to handle placeholder behavior
+        txtSignUpUsername.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (txtSignUpUsername.getText().equals(usernpPlaceholder)) {
+			    	txtSignUpUsername.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (txtSignUpUsername.getText().isEmpty()) {
+					   txtSignUpUsername.setText(usernpPlaceholder);
+	                	
+	                }				
+			}
+        });
         
-        txtSignPassword = new JPasswordField();
+        txtSignPassword = createRoundedTextField(10);
         txtSignPassword.setText("password");
         txtSignPassword.setColumns(10);
-        txtSignPassword.setBounds(348, 445, 237, 40);
-    
-        JButton btnExitSignUp = new JButton("EXIT");
-        btnExitSignUp.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-        		
+        txtSignPassword.setBounds(348, 445, 250, 40);
+        txtSignPassword.setForeground(new Color(255, 202, 110));
+        try {
+    			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(17f);
+                // Register the font with the Graphics Environment
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(font);
+                txtSignPassword.setFont(font);
                 
+
+    		} catch (FontFormatException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		} catch (IOException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		}
+        final String userpPlaceholder = "  password";
+        txtSignPassword.setText(userpPlaceholder); // Set initial placeholder text
+        // Add a focus listener to handle placeholder behavior
+        txtSignPassword.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (txtSignPassword.getText().equals(userpPlaceholder)) {
+			    	txtSignPassword.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (txtSignPassword.getText().isEmpty()) {
+					   txtSignPassword.setText(userpPlaceholder);
+	                	
+	                }				
+			}
+        });
+    
+        JButton btnReturn = new JButton();
+        btnReturn.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnReturnIcon.png"));
+        btnReturn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {     		
+        		showMainPanel();   
         	}
         });
-        btnExitSignUp.setBounds(809, 705, 93, 40);        
+        btnReturn.setBounds(809, 705, 106, 52);
+        btnReturn.setOpaque(false);
+        btnReturn.setContentAreaFilled(false);
+        btnReturn.setBorderPainted(false);
         
         
         panel.add(BtnSignUp);
@@ -434,7 +576,7 @@ public class LoginForm {
         panel.add(txtSignUpName);
         panel.add(txtSignUpUsername);
         panel.add(txtSignPassword);
-        panel.add(btnExitSignUp);
+        panel.add(btnReturn);
 
         return panel;
     }
@@ -541,6 +683,22 @@ public class LoginForm {
         ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\signupSuccess.png");
         panel.setLayout(null);
         panel.setBounds(0, 0, 940, 788);
+        
+        
+        JButton btnNext = new JButton();
+        btnNext.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnNextIcon.png"));
+        btnNext.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {     		
+        		showLoginPanel();
+                
+        	}
+        });
+        btnNext.setBounds(809, 705, 106, 52);
+        btnNext.add(btnExit);
+        btnNext.setOpaque(false);
+        btnNext.setContentAreaFilled(false);
+        btnNext.setBorderPainted(false);
+        
     	
     	return panel;
     }
@@ -573,6 +731,7 @@ public class LoginForm {
     }
     private void showMainPanel() {
         frame.getContentPane().remove(loginPanel);
+        frame.getContentPane().remove(signUpPanel);
         frame.getContentPane().add(firstPanel);
         frame.getContentPane().add(firstPanel_1);
         frame.revalidate();
