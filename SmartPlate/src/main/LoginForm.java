@@ -25,7 +25,7 @@ public class LoginForm {
 	private JPanel firstPanel;
 	private JPanel firstPanel_1;
 	private JButton btnSignUp;
-	private JButton btnExit;
+	private JButton btnExit, btnNext;
 	private JButton btnConnect;
     private JPanel loginPanel;
     private JPanel signUpPanel;
@@ -680,25 +680,26 @@ public class LoginForm {
     }
     
     private JPanel createWelcomePanel() {
-        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\signupSuccess.png");
+    	JPanel panel = new JPanel(null);
+        panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\DoneSignUp.png");
         panel.setLayout(null);
         panel.setBounds(0, 0, 940, 788);
         
         
-        JButton btnNext = new JButton();
+        btnNext = new JButton();
         btnNext.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnNextIcon.png"));
         btnNext.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {     		
+        	public void actionPerformed(ActionEvent e) {     	
         		showLoginPanel();
-                
         	}
         });
-        btnNext.setBounds(809, 705, 106, 52);
-        btnNext.add(btnExit);
+        btnNext.setBounds(809, 405, 106, 52);
         btnNext.setOpaque(false);
         btnNext.setContentAreaFilled(false);
         btnNext.setBorderPainted(false);
         
+        panel.add(btnNext); 
+
     	
     	return panel;
     }
@@ -710,13 +711,13 @@ public class LoginForm {
         frame.getContentPane().add(signupSucess);
         frame.revalidate();
         frame.repaint();
-              
     }
     private void showLoginPanel() {
         frame.getContentPane().remove(firstPanel);
         frame.getContentPane().remove(firstPanel_1);
         frame.getContentPane().add(loginPanel);
         frame.getContentPane().remove(signUpPanel);
+        frame.getContentPane().remove(signupSucess);
         frame.revalidate();
         frame.repaint();
               
