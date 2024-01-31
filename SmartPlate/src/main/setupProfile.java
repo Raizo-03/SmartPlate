@@ -16,6 +16,8 @@ public class setupProfile {
 
 	private JFrame frame;
 	private JPanel chefsKnowledgePanel, JPanel, chefsAllergyPanel;
+	static final User String = null;
+    private User currentUser;
 
 	/**
 	 * Launch the application.
