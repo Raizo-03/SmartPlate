@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class setupProfile {
@@ -71,7 +72,33 @@ public class setupProfile {
             g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
         }
     }
-    
+    //For setting the cooking level
+    private void updateCookingLevel(String level) {
+        String username = currentUser.getUsername();
+
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String sql = "UPDATE UserAccounts SET cooking_level=? WHERE username=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, level);
+                preparedStatement.setString(2, username);
+
+                //FOR TROUBLE SHOOTING IF FETCHING IS CORRECT
+                int updatedRows = preparedStatement.executeUpdate();
+                if (updatedRows > 0) {
+                } else {
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void confirmAndUpdateLevel(String level, String message) {
+        int response = JOptionPane.showConfirmDialog(frame, message, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            updateCookingLevel(level);
+            JOptionPane.showMessageDialog(frame, "You are now a " + level + "!", "Update Successful", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
     private void fetchinguserInformation() {
         String username = currentUser.getUsername();
 
@@ -113,9 +140,19 @@ public class setupProfile {
         frame.setIconImage(AppIcon.getImage());
         
         chefsKnowledgePanel = createchefsKnowledgePanel();
+        chefsAllergyPanel = createAllergiesPanel();
         frame.getContentPane().add(chefsKnowledgePanel);
 
 	}
+	
+	private JPanel createAllergiesPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\AllergiesImage.png");
+        panel.setLayout(null);
+        panel.setBounds(0, 0, 940, 788);
+		
+		return panel;
+	}
+	
 	
 	private JPanel createchefsKnowledgePanel() {
         ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\chefsKnowledgeImage.png");
@@ -143,24 +180,67 @@ public class setupProfile {
         btnAdvanced.setBorderPainted(false);
         btnAdvanced.setBounds(640, 623, 243, 66);
         
+        JButton btnNext = new JButton("");
+        btnNext.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnNextIcon.png"));
+        btnNext.setBounds(794, 710, 106, 52);
+        btnNext.setOpaque(false);
+        btnNext.setContentAreaFilled(false);
+        btnNext.setBorderPainted(false);
+        btnNext.addActionListener( e -> {
+        	  int response = JOptionPane.showConfirmDialog(frame, "Are you sure you want to continue?",
+                      "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        	  
+        	  if (response == JOptionPane.YES_OPTION) {
+        		  showAllergiesPanel();
+              }
+        });
+        
+        JButton btnReset = new JButton("");
+        btnReset.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnResetIcon.png"));
+        btnReset.setOpaque(false);
+        btnReset.setContentAreaFilled(false);
+        btnReset.setBorderPainted(false);
+        btnReset.setBounds(41, 188, 106, 52);
+        btnReset.addActionListener(e -> {
+            int response = JOptionPane.showConfirmDialog(frame, "Are you sure you want to reset your cooking level?",
+                                                         "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
+                updateCookingLevel("beginner");
+                JOptionPane.showMessageDialog(frame, "Your cooking level has been reset to beginner.", 
+                                              "Reset Successful", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        
+        btnBeginner.addActionListener(e -> confirmAndUpdateLevel("beginner", "Are you sure you want to choose beginner?"));
+        btnIntermediate.addActionListener(e -> confirmAndUpdateLevel("intermediate", "Are you sure you want to choose intermediate?"));
+        btnAdvanced.addActionListener(e -> confirmAndUpdateLevel("advanced", "Are you sure you want to choose advanced?"));
+        
         panel.add(btnBeginner);
         panel.add(btnIntermediate);
         panel.add(btnAdvanced);
+        panel.add(btnNext);
+        panel.add(btnReset);
         
         return panel;
 	}
-
+    private void showAllergiesPanel() {
+        frame.getContentPane().remove(chefsKnowledgePanel);
+        frame.getContentPane().add(chefsAllergyPanel);
+        frame.revalidate();
+        frame.repaint();
+    }
+    
 	public void Show() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DashboardForm window = new DashboardForm(currentUser);
+					setupProfile window = new setupProfile(currentUser);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		});			
+		});		
 	}
 
 }
