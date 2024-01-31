@@ -148,7 +148,6 @@ public class DashboardForm {
         JButton btnRight = new JButton(btnrightIcon);	
         btnRight.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Clicked!");
         	}
         });
         btnRight.setBounds(608, 475, 60, 53);
