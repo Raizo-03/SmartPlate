@@ -8,11 +8,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JButton;
 
-public class setupProfile {
+public class setupProfileUI {
 
 	private JFrame frame;
 	private JPanel chefsKnowledgePanel, JPanel, chefsAllergyPanel;
@@ -24,7 +24,7 @@ public class setupProfile {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					setupProfile window = new setupProfile();
+					setupProfileUI window = new setupProfileUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,26 +36,10 @@ public class setupProfile {
 	/**
 	 * Create the application.
 	 */
-	public setupProfile() {
+	public setupProfileUI() {
 		initialize();
 	}
-    private class ImagePanel extends JPanel {
-        private BufferedImage image;
 
-        public ImagePanel(String imagePath) {
-            try {
-                image = ImageIO.read(new File(imagePath));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
-        }
-    }
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -69,16 +53,11 @@ public class setupProfile {
         ImageIcon AppIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\SmartPlateLogo1.png");
         frame.setIconImage(AppIcon.getImage());
         
-        chefsKnowledgePanel = createchefsKnowledgePanel();
-        frame.getContentPane().add(chefsKnowledgePanel);
-
-	}
-	
-	private JPanel createchefsKnowledgePanel() {
+ 
         ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\chefsKnowledgeImage.png");
         panel.setLayout(null);
         panel.setBounds(0, 0, 940, 788);
-        
+                
         JButton btnBeginner = new JButton("");
         btnBeginner.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnBeginnerIcon.png"));
         btnBeginner.setBounds(41, 623, 243, 66);
@@ -99,12 +78,38 @@ public class setupProfile {
         btnAdvanced.setContentAreaFilled(false);
         btnAdvanced.setBorderPainted(false);
         btnAdvanced.setBounds(640, 623, 243, 66);
-        
-        panel.add(btnBeginner);
-        panel.add(btnIntermediate);
-        panel.add(btnAdvanced);
-        
+
+        frame.getContentPane().add(btnBeginner);
+        frame.getContentPane().add(btnIntermediate);
+        frame.getContentPane().add(btnAdvanced);
+        frame.getContentPane().add(panel);
+
+
+
+		
+	}
+	private JPanel createchefsKnowledgePanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\chefsKnowledgeImage.png");
+        panel.setLayout(null);
+        panel.setBounds(0, 0, 940, 788);
         return panel;
 	}
+    private class ImagePanel extends JPanel {
+        private BufferedImage image;
+
+        public ImagePanel(String imagePath) {
+            try {
+                image = ImageIO.read(new File(imagePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+        }
+    }
 
 }

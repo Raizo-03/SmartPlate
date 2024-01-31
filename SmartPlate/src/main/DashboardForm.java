@@ -62,7 +62,6 @@ public class DashboardForm {
 	    currentUser = SessionManager.getCurrentUser();
 	    // Check if the user is authenticated before displaying user info
 	    if (currentUser != null) {
-	        displayUserInfo();
 	        fetchinguserInformation(); // Move fetchinguserInformation() here
 	    } else {
 	        // Handle the case when the user is not authenticated
@@ -70,13 +69,6 @@ public class DashboardForm {
 	    }
 	    startSlidingLabels();
 	}
-    private void displayUserInfo() {
-        // Display user information in the UI
-        nameLabel.setText(currentUser.getUsername());
-        // AdditionalInfo can be displayed or used as needed
-        // For example: currentUser.getAdditionalInfo();
-    }
-    
     private void fetchinguserInformation() {
         String username = currentUser.getUsername();
 
