@@ -97,6 +97,8 @@ public class setupProfile {
             e.printStackTrace();
         }
     }
+    
+    
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -146,6 +148,19 @@ public class setupProfile {
         panel.add(btnAdvanced);
         
         return panel;
+	}
+
+	public void Show() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DashboardForm window = new DashboardForm(currentUser);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});			
 	}
 
 }
