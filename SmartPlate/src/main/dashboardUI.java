@@ -5,21 +5,33 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
+import java.util.ArrayList;
+
 
 public class dashboardUI {
 
 	private JFrame frame;
 	private JLabel nameLabel;
+	private List<JButton> menuButtons;
+	private static final int BUTTON_SHIFT = 222; // Distance to shift buttons
+	private List<JLabel> slidingLabels;
+	private static final int LABEL_SHIFT = 180; // Distance to shift labels
+	
+	
 
 	/**
 	 * Launch the application.
@@ -42,6 +54,8 @@ public class dashboardUI {
 	 */
 	public dashboardUI() {
 		initialize();
+		startSlidingLabels();
+
 	}
 	
     private class ImagePanel extends JPanel {
@@ -77,7 +91,7 @@ public class dashboardUI {
         frame.setIconImage(AppIcon.getImage());
         
         JPanel panel = new JPanel();
-        panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\Homepage.png");
+        panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\menu.png");
         panel.setLayout(null);
         panel.setBounds(0, 0, 940, 788);
 
@@ -87,15 +101,15 @@ public class dashboardUI {
         
         frame.getContentPane().add(panel);
         
-        ImageIcon imageIcon = new ImageIcon("C:\\Users\\USER\\Downloads\\double-arrows (2) (1).png");
 
-        JButton btnRight = new JButton(imageIcon);	
+        
+        ImageIcon btnrightIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnRightIcon.png");
+        JButton btnRight = new JButton(btnrightIcon);	
         btnRight.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Clicked!");
         	}
         });
-        btnRight.setBounds(579, 465, 60, 53);
+        btnRight.setBounds(608, 475, 60, 53);
         frame.getContentPane().add(btnRight);
         panel.add(btnRight);
         // Make the button non-opaque
@@ -107,18 +121,178 @@ public class dashboardUI {
         // Make the button's border transparent
         btnRight.setBorderPainted(false);
         
-        ImageIcon imageIcon1 = new ImageIcon("C:\\Users\\USER\\Downloads\\arrow-left (2) (1).png");
-
-        JButton btnLeft = new JButton(imageIcon1);
+        ImageIcon btnleftIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnLeftIcon.png");
+        
+        ImageIcon lblPakbetIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\lblPakbetIcon.png");
+        JLabel lblPakbet = new JLabel(lblPakbetIcon);
+        lblPakbet.setBounds(175, 571, 165, 111);
+        frame.getContentPane().add(lblPakbet);
+        
+        ImageIcon lblCBeefIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\lblCBeefIcon.png");
+        JLabel lblCBeef = new JLabel(lblCBeefIcon);
+        lblCBeef.setBounds(515, 571, 165, 111);
+        frame.getContentPane().add(lblCBeef);
+        
+        ImageIcon lblAdobongSitawIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\lblAdobongSitawIcon.png");
+        JLabel lblAdobongSitaw = new JLabel(lblAdobongSitawIcon);
+        lblAdobongSitaw.setBounds(350, 571, 155, 111);
+        frame.getContentPane().add(lblAdobongSitaw);
+        
+        ImageIcon lblTunaEggIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\lblTunaEggIcon.png");
+        JLabel lblTunaEgg = new JLabel(lblTunaEggIcon);
+        lblTunaEgg.setBounds(690, 571, 165, 111);
+        frame.getContentPane().add(lblTunaEgg);
+        
+        ImageIcon lblSizzlingTofuIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\lblSizzTofuIcon.png");
+        JLabel lblSizzlingTofu = new JLabel(lblSizzlingTofuIcon);
+        lblSizzlingTofu.setBounds(0, 571, 165, 111);
+        frame.getContentPane().add(lblSizzlingTofu);
+        
+        ImageIcon lblEggIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\lblEggIcon.png");
+        JLabel lblEgg = new JLabel(lblEggIcon);
+        lblEgg.setBorder(null);
+        lblEgg.setBounds(865, 571, 156, 111);
+        frame.getContentPane().add(lblEgg);
+        
+     // After creating and adding labels to the frame
+        slidingLabels = new ArrayList<>();
+        slidingLabels.add(lblSizzlingTofu); // Assuming this is the first (leftmost) label
+        slidingLabels.add(lblPakbet);
+        slidingLabels.add(lblAdobongSitaw);
+        slidingLabels.add(lblCBeef);
+        slidingLabels.add(lblTunaEgg);
+        slidingLabels.add(lblEgg); // Assuming this is the last (rightmost) label
+        
+        
+        
+        JButton btnLeft = new JButton(btnleftIcon);
         btnLeft.setOpaque(false);
         btnLeft.setContentAreaFilled(false);
         btnLeft.setBorderPainted(false);
-        btnLeft.setBounds(237, 465, 60, 53);
+        btnLeft.setBounds(269, 475, 60, 53);
         frame.getContentPane().add(btnLeft);
         panel.add(btnLeft);
+        
+        ImageIcon btnProfileIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnMeIcon.png");
+        JButton btnProfile = new JButton(btnProfileIcon);
+        btnProfile.setOpaque(false);
+        btnProfile.setContentAreaFilled(false);
+        btnProfile.setBorderPainted(false);
+        btnProfile.setBounds(165, 240, 175, 191);
+        panel.add(btnProfile);
+        
+        ImageIcon btnHistoryIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnHistoryIcon.png");
+        JButton btnHistory = new JButton(btnHistoryIcon);
+        btnHistory.setOpaque(false);
+        btnHistory.setContentAreaFilled(false);
+        btnHistory.setBorderPainted(false);
+        btnHistory.setBounds(-32, 240, 175, 191);
+        panel.add(btnHistory);
+        
+        ImageIcon btnAboutIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnAboutIcon.png");
+        JButton btnAbout = new JButton(btnAboutIcon);
+        btnAbout.setOpaque(false);
+        btnAbout.setContentAreaFilled(false);
+        btnAbout.setBorderPainted(false);
+        btnAbout.setBounds(608, 240, 175, 191);
+        panel.add(btnAbout);
+
+        ImageIcon btnBudgetIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnBudgetIcon.png");
+        JButton btnBudget = new JButton(btnBudgetIcon);
+        btnBudget.setOpaque(false);
+        btnBudget.setContentAreaFilled(false);
+        btnBudget.setBorderPainted(false);
+        btnBudget.setBounds(806, 240, 175, 191);
+        panel.add(btnBudget);
+
+        ImageIcon btnCookIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCookIcon.png");
+        JButton btnCook = new JButton(btnCookIcon);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.setBounds(389, 240, 175, 191);
+        panel.add(btnCook);
+        
+        // Initialize the menu buttons list
+        menuButtons = new ArrayList<>();
+        menuButtons.add(btnHistory); // Assuming this is the first (leftmost) button
+        menuButtons.add(btnProfile);
+        menuButtons.add(btnCook);
+        menuButtons.add(btnAbout);
+        menuButtons.add(btnBudget); // Assuming this is the last (rightmost) button
+
+        // Configure the right button
+        btnRight.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                scrollRight();
+            }
+        });
+
+        // Configure the left button
+        btnLeft.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                scrollLeft();
+            }
+        });
 
 
+        frame.getContentPane().add(panel);
 
-	
 	}
+	
+	//FOR RIGHT AND LEFT BUTTON
+	private void scrollRight() {
+	    JButton firstButton = menuButtons.remove(0);
+	    menuButtons.add(firstButton);
+	    updateButtonPositions();
+	}
+
+	private void scrollLeft() {
+	    JButton lastButton = menuButtons.remove(menuButtons.size() - 1);
+	    menuButtons.add(0, lastButton);
+	    updateButtonPositions();
+	}
+
+	private void updateButtonPositions() {
+	    int middleButtonIndex = 2; // The index of the middle button in the list
+	    int middleX = 389; // X position of the middle button (btnCook's initial position)
+
+	    // Calculate the starting x position based on the middle button's position
+	    int x = middleX - (BUTTON_SHIFT * middleButtonIndex);
+
+	    for (JButton button : menuButtons) {
+	        button.setBounds(x, 240, 175, 191); // Update position
+	        x += BUTTON_SHIFT; // Shift for the next button
+	    }
+	}
+	
+	//FOR SLIDESHOW
+	private void startSlidingLabels() {
+	    int delay = 1000; // Milliseconds between label shifts
+
+	    ActionListener taskPerformer = new ActionListener() {
+	        public void actionPerformed(ActionEvent evt) {
+	            scrollLabels();
+	        }
+	    };
+
+	    new Timer(delay, taskPerformer).start();
+	}
+
+	private void scrollLabels() {
+	    JLabel firstLabel = slidingLabels.remove(0);
+	    slidingLabels.add(firstLabel);
+	    updateLabelPositions();
+	}
+
+	private void updateLabelPositions() {
+	    int x = 15; // Starting x position for the first label
+
+	    for (JLabel label : slidingLabels) {
+	        label.setBounds(x, 571, 165, 111); // Update position
+	        x += LABEL_SHIFT; // Shift for the next label
+	    }
+	}
+	
+
 }
