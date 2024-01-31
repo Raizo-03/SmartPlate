@@ -169,8 +169,8 @@ public class LoginForm {
                         // Perform any additional actions or navigate to the main application
                     	JOptionPane.showMessageDialog(frame, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
                         SessionManager.createSession(authenticatedUser);
-                        DashboardForm dashboard = new DashboardForm(authenticatedUser);
-                    	dashboard.Show();
+                        setupProfile profile = new setupProfile(authenticatedUser);
+                        profile.Show();
                     	frame.dispose();
 
                     } else {
