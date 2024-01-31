@@ -79,9 +79,25 @@ public class setupProfileUI {
         btnAdvanced.setBorderPainted(false);
         btnAdvanced.setBounds(640, 623, 243, 66);
 
+        JButton btnNext = new JButton("");
+        btnNext.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnNextIcon.png"));
+        btnNext.setBounds(794, 710, 106, 52);
+        btnNext.setOpaque(false);
+        btnNext.setContentAreaFilled(false);
+        btnNext.setBorderPainted(false);
+        
+        JButton btnReset = new JButton("");
+        btnReset.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnResetIcon.png"));
+        btnReset.setOpaque(false);
+        btnReset.setContentAreaFilled(false);
+        btnReset.setBorderPainted(false);
+        btnReset.setBounds(41, 188, 106, 52);
+        
         frame.getContentPane().add(btnBeginner);
         frame.getContentPane().add(btnIntermediate);
         frame.getContentPane().add(btnAdvanced);
+        panel.add(btnNext);
+        panel.add(btnReset);
         frame.getContentPane().add(panel);
 
 

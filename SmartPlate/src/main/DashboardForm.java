@@ -25,7 +25,7 @@ import java.awt.BorderLayout;
 
 public class DashboardForm {
 
-	JFrame frame;
+	private JFrame frame;
 	static final User String = null;
     private User currentUser;
 	private JLabel nameLabel;
