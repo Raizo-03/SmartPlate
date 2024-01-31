@@ -5,6 +5,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -26,7 +30,7 @@ public class setupProfile {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					setupProfile window = new setupProfile();
+					setupProfile window = new setupProfile(String);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,8 +42,17 @@ public class setupProfile {
 	/**
 	 * Create the application.
 	 */
-	public setupProfile() {
+	public setupProfile(User user) {
 		initialize();
+	    // Fetch authenticated user from SessionManager
+	    currentUser = SessionManager.getCurrentUser();
+	    // Check if the user is authenticated before displaying user info
+	    if (currentUser != null) {
+	        fetchinguserInformation(); // Move fetchinguserInformation() here
+	    } else {
+	        // Handle the case when the user is not authenticated
+	        System.out.println("User not authenticated");
+	    }
 	}
     private class ImagePanel extends JPanel {
         private BufferedImage image;
@@ -56,6 +69,32 @@ public class setupProfile {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+        }
+    }
+    
+    private void fetchinguserInformation() {
+        String username = currentUser.getUsername();
+
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String sql = "SELECT * FROM UserAccounts WHERE username=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, username);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        // Retrieve user information from the result set
+                        String name = resultSet.getString("name");
+
+                        // Now you have the user information
+                        
+                        
+                        // You can update the UI or perform other actions with this information
+                    } else {
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 	/**
