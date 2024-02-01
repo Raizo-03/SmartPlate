@@ -2,6 +2,8 @@ package main;
 
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class setupProfileUI {
 
@@ -59,7 +62,9 @@ public class setupProfileUI {
         panel.setLayout(null);
         panel.setBounds(0, 0, 940, 788);
                 
-    
+        JLabel lblSelector = new JLabel("");
+        lblSelector.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\lblSelectorIcon.png"));
+        lblSelector.setBounds(451, 482, 141, 167);
      
         frame.getContentPane().add(panel);
         
@@ -69,7 +74,13 @@ public class setupProfileUI {
         btnMilk.setOpaque(false);
         btnMilk.setContentAreaFilled(false);
         btnMilk.setBorderPainted(false);
+        btnMilk.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelector.setBounds(73, 323, 141, 167);
+			}
         
+        });
 
         
         JButton btnEgg = new JButton("");
@@ -78,6 +89,13 @@ public class setupProfileUI {
         btnEgg.setContentAreaFilled(false);
         btnEgg.setBorderPainted(false);
         btnEgg.setBounds(242, 366, 87, 93);
+        btnEgg.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelector.setBounds(210, 323, 141, 167);				
+			}
+        	
+        });
         frame.getContentPane().add(btnEgg);
         
         JButton btnFish = new JButton("");
@@ -86,6 +104,14 @@ public class setupProfileUI {
         btnFish.setContentAreaFilled(false);
         btnFish.setBorderPainted(false);
         btnFish.setBounds(406, 366, 87, 93);
+        btnFish.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelector.setBounds(373, 323, 141, 167);
+				}
+        	
+        });
         frame.getContentPane().add(btnFish);
         
         JButton btnCrab = new JButton("");
@@ -94,6 +120,14 @@ public class setupProfileUI {
         btnCrab.setContentAreaFilled(false);
         btnCrab.setBorderPainted(false);
         btnCrab.setBounds(560, 366, 87, 93);
+        btnCrab.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelector.setBounds(524, 323, 141, 167);				
+			}
+        	
+        });
         frame.getContentPane().add(btnCrab);
         
         JButton btnPeanut = new JButton("");
@@ -102,6 +136,14 @@ public class setupProfileUI {
         btnPeanut.setContentAreaFilled(false);
         btnPeanut.setBorderPainted(false);
         btnPeanut.setBounds(728, 366, 87, 93);
+        btnPeanut.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelector.setBounds(696, 323, 141, 167);				
+			}
+        	
+        });
         frame.getContentPane().add(btnPeanut);
         
         JButton btnGrain = new JButton("");
@@ -110,6 +152,14 @@ public class setupProfileUI {
         btnGrain.setContentAreaFilled(false);
         btnGrain.setBorderPainted(false);
         btnGrain.setBounds(195, 519, 87, 93);
+        btnGrain.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelector.setBounds(161, 482, 141, 167);				
+			}
+        	
+        });
         frame.getContentPane().add(btnGrain);
         
         JButton btnCoffee = new JButton("");
@@ -118,6 +168,14 @@ public class setupProfileUI {
         btnCoffee.setContentAreaFilled(false);
         btnCoffee.setBorderPainted(false);
         btnCoffee.setBounds(354, 519, 87, 93);
+        btnCoffee.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelector.setBounds(321, 482, 141, 167);				
+			}
+        	
+        });
         frame.getContentPane().add(btnCoffee);
         
         JButton btnNuts = new JButton("");
@@ -126,6 +184,14 @@ public class setupProfileUI {
         btnNuts.setContentAreaFilled(false);
         btnNuts.setBorderPainted(false);
         btnNuts.setBounds(479, 519, 87, 93);
+        btnNuts.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelector.setBounds(451, 482, 141, 167);				
+			}
+        	
+        });
         frame.getContentPane().add(btnNuts);
         
         JButton btnShellfish = new JButton("");
@@ -134,6 +200,14 @@ public class setupProfileUI {
         btnShellfish.setContentAreaFilled(false);
         btnShellfish.setBorderPainted(false);
         btnShellfish.setBounds(627, 519, 87, 93);
+        btnShellfish.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSelector.setBounds(598, 482, 141, 167);
+			}
+        	
+        });
         frame.getContentPane().add(btnShellfish);
 
 
@@ -159,6 +233,10 @@ public class setupProfileUI {
                                               "Reset Successful", JOptionPane.INFORMATION_MESSAGE);
             }
         });
+        
+        
+        frame.getContentPane().add(lblSelector);
+        
         frame.getContentPane().add(btnReset);
 
         frame.getContentPane().add(btnReadyCook);
@@ -166,6 +244,8 @@ public class setupProfileUI {
         frame.getContentPane().add(btnMilk);
         
         frame.getContentPane().add(panel);
+        
+     
 	}
 	private JPanel createchefsKnowledgePanel() {
         ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\chefsKnowledgeImage.png");

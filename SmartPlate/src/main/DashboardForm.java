@@ -248,6 +248,15 @@ public class DashboardForm {
         btnCook.setBorderPainted(false);
         btnCook.setBounds(389, 240, 175, 191);
         panel.add(btnCook);
+        btnCook.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+        });
+        
+        
         
         // Initialize the menu buttons list
         menuButtons = new ArrayList<>();

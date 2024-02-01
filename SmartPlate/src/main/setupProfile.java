@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -342,15 +343,51 @@ public class setupProfile {
                                               "Reset Successful", JOptionPane.INFORMATION_MESSAGE);
             }
         });
-        btnMilk.addActionListener(e -> confirmAndUpdateAllergy("milk", "Are you sure you have a milk allergy?"));
-        btnEgg.addActionListener(e -> confirmAndUpdateAllergy("eggs", "Are you sure you have a egg allergy?"));
-        btnFish.addActionListener(e -> confirmAndUpdateAllergy("fish", "Are you sure you have a fish allergy?"));
-        btnCrab.addActionListener(e -> confirmAndUpdateAllergy("crab", "Are you sure you have a crab or shrimp allergy?"));
-        btnPeanut.addActionListener(e -> confirmAndUpdateAllergy("peanut", "Are you sure you have a peanut allergy?"));
-        btnGrain.addActionListener(e -> confirmAndUpdateAllergy("grain", "Are you sure you have grains allergy?"));
-        btnCoffee.addActionListener(e -> confirmAndUpdateAllergy("coffee", "Are you sure you have a coffee allergy?"));
-        btnNuts.addActionListener(e -> confirmAndUpdateAllergy("nuts", "Are you sure you have nuts allergy?"));
-        btnShellfish.addActionListener(e -> confirmAndUpdateAllergy("shellfish", "Are you sure you have a shellfish allergy?"));
+        JLabel lblSelector = new JLabel("");
+        lblSelector.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\lblSelectorIcon.png"));
+        lblSelector.setBounds(451, 482, 141, 167);
+        
+        btnMilk.addActionListener(e -> {
+        	lblSelector.setBounds(73, 323, 141, 167);
+        	confirmAndUpdateAllergy("milk", "Are you sure you have a milk allergy?");     		
+        });
+        btnEgg.addActionListener(e -> {
+        	lblSelector.setBounds(210, 323, 141, 167);
+        	confirmAndUpdateAllergy("eggs", "Are you sure you have a egg allergy?");
+
+        });
+        btnFish.addActionListener(e -> {
+        	 lblSelector.setBounds(373, 323, 141, 167);
+        	confirmAndUpdateAllergy("fish", "Are you sure you have a fish allergy?");      
+        });
+        btnCrab.addActionListener(e -> {
+        	lblSelector.setBounds(524, 323, 141, 167);
+        	confirmAndUpdateAllergy("crab", "Are you sure you have a crab or shrimp allergy?");
+        
+        });
+        btnPeanut.addActionListener(e -> {
+        	lblSelector.setBounds(696, 323, 141, 167);
+        	confirmAndUpdateAllergy("peanut", "Are you sure you have a peanut allergy?");
+ 
+        });
+        btnGrain.addActionListener(e -> {
+            lblSelector.setBounds(161, 482, 141, 167);
+        	confirmAndUpdateAllergy("grain", "Are you sure you have grains allergy?");
+        });
+        btnCoffee.addActionListener(e -> {
+            lblSelector.setBounds(321, 482, 141, 167);
+        	confirmAndUpdateAllergy("coffee", "Are you sure you have a coffee allergy?");
+        });
+        btnNuts.addActionListener(e -> {
+            lblSelector.setBounds(451, 482, 141, 167);
+        	confirmAndUpdateAllergy("nuts", "Are you sure you have nuts allergy?");
+        });
+        btnShellfish.addActionListener(e -> {
+            lblSelector.setBounds(598, 482, 141, 167);
+        	confirmAndUpdateAllergy("shellfish", "Are you sure you have a shellfish allergy?");
+        });
+        
+        panel.add(lblSelector);
         panel.add(btnMilk);
         panel.add(btnEgg);
         panel.add(btnFish);
