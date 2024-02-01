@@ -686,6 +686,9 @@ public class LoginForm {
         panel.setBounds(0, 0, 940, 788);
         
         
+        
+        
+        
         btnNext = new JButton();
         btnNext.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnNextIcon.png"));
         btnNext.addActionListener(new ActionListener() {
@@ -693,7 +696,7 @@ public class LoginForm {
         		showLoginPanel();
         	}
         });
-        btnNext.setBounds(809, 405, 106, 52);
+        btnNext.setBounds(809, 705, 106, 52);
         btnNext.setOpaque(false);
         btnNext.setContentAreaFilled(false);
         btnNext.setBorderPainted(false);
