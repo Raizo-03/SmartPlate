@@ -1,4 +1,5 @@
 package main;
+import framesPackage.*;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -29,7 +30,7 @@ public class DashboardForm {
 	static final User String = null;
     private User currentUser;
 	private JLabel nameLabel;
-	private JPanel currentPanel, homePanel, profilePanel, historyPanel, budgetPanel;
+	private JPanel homePanel;
 	
 	//EFFECTS
 	private List<JButton> menuButtons;
