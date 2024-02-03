@@ -28,5 +28,37 @@ ADD COLUMN allergy_peanut BOOLEAN DEFAULT FALSE,
 ADD COLUMN allergy_grain BOOLEAN DEFAULT FALSE,
 ADD COLUMN allergy_shellfish BOOLEAN DEFAULT FALSE,
 ADD COLUMN allergy_nuts BOOLEAN DEFAULT FALSE;
-ADD COLUMN allergy_coffee BOOLEAN DEFAULT FALSE;
+
+CREATE TABLE IF NOT EXISTS DISH (
+    id INT AUTO_INCREMENT,
+    dish_name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    low_calorie BOOLEAN DEFAULT FALSE,
+    high_protein BOOLEAN DEFAULT FALSE,
+    heart_healthy BOOLEAN DEFAULT FALSE,
+    balanced_nutrition BOOLEAN DEFAULT FALSE,
+    low_carb BOOLEAN DEFAULT FALSE,
+    gluten_free BOOLEAN DEFAULT FALSE,
+    vitamins_minerals_focused BOOLEAN DEFAULT FALSE,
+    low_sodium BOOLEAN DEFAULT FALSE,
+    image VARCHAR(255),
+    PRIMARY KEY(id),
+    UNIQUE(dish_name)
+);
+
+INSERT INTO DISH (dish_name, price, low_calorie, high_protein, heart_healthy, balanced_nutrition, low_carb, gluten_free, vitamins_minerals_focused, low_sodium, image) VALUES
+('Fried Egg', 15, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, 'C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\friedEggImage.jpg'),
+('Corned Beef with Egg', 60, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, ''),
+('Fried Rice', 50, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, ''),
+('Fried Tuna', 65, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, ''),
+('Chop Suey', 100, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, ''),
+('Pakbet', 150, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, ''),
+('Adobong Sitaw', 100, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, ''),
+('Ensaladang Talong', 75, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, '');
+
+
+
+
+
+
 
