@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -31,7 +32,8 @@ public class DashboardForm {
     private User currentUser;
 	private JLabel nameLabel;
 	private JPanel homePanel;
-	
+    DatabaseConnection base = new DatabaseConnection();
+
 	//EFFECTS
 	private List<JButton> menuButtons;
 	private static final int BUTTON_SHIFT = 222; // Distance to shift buttons
@@ -85,6 +87,8 @@ public class DashboardForm {
 
                         // Now you have the user information
                         nameLabel.setText(name);
+                        
+                        //nameLabel.setVisible(false);
 
                         // You can update the UI or perform other actions with this information
                     } else {
@@ -249,14 +253,38 @@ public class DashboardForm {
         btnCook.setBorderPainted(false);
         btnCook.setBounds(389, 240, 175, 191);
         panel.add(btnCook);
+        
         btnCook.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				
+                User authenticatedUser = UserAuthentication.authenticateUser1(currentUser.getUsername());
+                SessionManager.createSession(authenticatedUser);
+                cookFrame cook = new cookFrame(authenticatedUser);
+                cook.Show();
+                frame.dispose();			
 			}
         });
         
+        JButton btnLogout = new JButton("");
+        btnLogout.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnLogoutIcon.png"));
+        btnLogout.setOpaque(false);
+        btnLogout.setContentAreaFilled(false);
+        btnLogout.setBorderPainted(false);
+        btnLogout.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                int response = JOptionPane.showConfirmDialog(frame, "Are you sure you want to logout?",
+                        "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (response == JOptionPane.YES_OPTION) {
+                	logoutSession();
+                	LoginForm login = new LoginForm();
+                	login.Show();
+                	frame.dispose();
+                }
+        		
+        	}
+        });
+        btnLogout.setBounds(798, 725, 106, 52);
         
         
         // Initialize the menu buttons list
@@ -291,6 +319,7 @@ public class DashboardForm {
         
         panel.add(btnLeft);
         panel.add(btnRight);
+        panel.add(btnLogout);
 
         return panel;
     }
@@ -305,6 +334,10 @@ public class DashboardForm {
 	    JButton lastButton = menuButtons.remove(menuButtons.size() - 1);
 	    menuButtons.add(0, lastButton);
 	    updateButtonPositions();
+	}
+	
+	private void logoutSession() {
+		SessionManager.clearSession();
 	}
 
 	private void updateButtonPositions() {

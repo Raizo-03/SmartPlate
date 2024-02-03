@@ -237,6 +237,20 @@ public class dashboardUI {
 
 
         frame.getContentPane().add(panel);
+        
+        JButton btnLogout = new JButton("");
+        btnLogout.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnLogoutIcon.png"));
+        btnLogout.setOpaque(false);
+        btnLogout.setContentAreaFilled(false);
+        btnLogout.setBorderPainted(false);
+        btnLogout.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		
+        	}
+        });
+        btnLogout.setBounds(798, 725, 106, 52);
+        frame.getContentPane().add(btnLogout);
 
 	}
 	
@@ -293,6 +307,4 @@ public class dashboardUI {
 	        x += LABEL_SHIFT; // Shift for the next label
 	    }
 	}
-	
-
 }
