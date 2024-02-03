@@ -760,4 +760,20 @@ public class LoginForm {
             g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
         }
     }
+
+
+
+
+	public void Show() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LoginForm window = new LoginForm();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});		
+	}
 }
