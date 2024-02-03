@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
@@ -35,8 +36,14 @@ public class cookFrame {
     private JLabel lblName;
     DatabaseConnection base = new DatabaseConnection();
     private String name;
-    private JPanel dietaryPanel, budgetPanel, suggestionsPanel;
+    private JPanel panel, dietaryPanel, budgetPanel, tofuPanel, tofuPanel2;
 	private JTextField txtFieldBugdet;
+	private int price = 0;
+	private boolean low_calorie = false, vegetarian = false, low_sodium = false,
+	high_protein, heart_healthy = false, balanced_nutrition = false, low_carb = false,gluten_free = false, vitamins_minerals_focused = false;
+	private JRadioButton rdHighProtein, rdHeart, rdVegetarian, rdCalorie, rdBalanced, rdSodium, rdCarbs, rdGluten, rdVita;
+
+
     
 	/**
 	 * Launch the application.
@@ -106,14 +113,220 @@ public class cookFrame {
         frame.getContentPane().setLayout(null);
         
         
-        dietaryPanel = createDietaryPanel();
-        budgetPanel = createBudgetPanel();
+        panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\dietaryPanelImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+		
+        
+         rdHighProtein = new JRadioButton("  High Protein");
+        rdHighProtein.setBackground(new Color(164, 229, 255)); // #A4E5FF
+        rdHighProtein.setForeground(new Color(229, 175, 55));
+        rdHighProtein.setBounds(46, 163, 263, 45);
+        rdHighProtein.setBorder(null);
+        rdHighProtein.setFocusPainted(false);
+        Icon proteinDefault = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\proteinDefaultIcon.png"); // Custom radio button icon
+        Icon proteinSelected = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\proteinSelectedIcon.png");     
+        rdHighProtein.setIcon(proteinDefault); // Default state
+        rdHighProtein.setSelectedIcon(proteinSelected); // Selected state
+        
+        
+         rdHeart = new JRadioButton("  Heart-Healthy");
+        rdHeart.setForeground(new Color(255, 102, 196));
+        rdHeart.setFocusPainted(false);
+        rdHeart.setBorder(null);
+        rdHeart.setBackground(new Color(164, 229, 255));
+        rdHeart.setBounds(24, 263, 285, 45);
+        Icon heartDefault = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\heartDefaultIcon.png"); // Custom radio button icon
+        Icon heartSelected = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\heartSelectedIcon.png"); // Custom selected radio button icon
+        rdHeart.setIcon(heartDefault); // Default state
+        rdHeart.setSelectedIcon(heartSelected); // Selected stat
+        
+         rdVegetarian = new JRadioButton("  Vegetarian");
+        rdVegetarian.setForeground(new Color(126, 217, 87));
+        rdVegetarian.setFont(new Font("Dialog", Font.PLAIN, 21));
+        rdVegetarian.setFocusPainted(false);
+        rdVegetarian.setBorder(null);
+        rdVegetarian.setBackground(new Color(164, 229, 255));
+        rdVegetarian.setBounds(53, 360, 234, 45);
+        Icon vegeDefault = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\vegeDefaultIcon.png"); // Custom radio button icon
+        Icon vegeSelected = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\vegeSelectedIcon.png"); // Custom selected radio button icon
+        rdVegetarian.setIcon(vegeDefault); // Default state
+        rdVegetarian.setSelectedIcon(vegeSelected); // Selected stat
+        
+         rdCalorie = new JRadioButton("  Low-Calorie");
+        rdCalorie.setForeground(new Color(218, 52, 34));
+        rdCalorie.setFocusPainted(false);
+        rdCalorie.setBorder(null);
+        rdCalorie.setBackground(new Color(164, 229, 255));
+        rdCalorie.setBounds(57, 464, 263, 45);
+        Icon calorieDefault = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\calorieDefaultIcon.png"); // Custom radio button icon
+        Icon calorieSelected = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\calorieSelectedIcon.png"); // Custom selected radio button icon
+        rdCalorie.setIcon(calorieDefault); // Default state
+        rdCalorie.setSelectedIcon(calorieSelected); // Selected stat
+        
+         rdBalanced = new JRadioButton(" Balanced Nutrition");
+        rdBalanced.setForeground(new Color(0, 133, 200));
+        rdBalanced.setFocusPainted(false);
+        rdBalanced.setBorder(null);
+        rdBalanced.setBackground(new Color(164, 229, 255));
+        rdBalanced.setBounds(282, 693, 334, 45);
+        Icon balancedDefaultIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\balancedDefaultIcon.png"); // Custom radio button icon
+        Icon balancedSelectedIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\balancedSelectedIcon.png"); // Custom selected radio button icon
+        rdBalanced.setIcon(balancedDefaultIcon); // Default state
+        rdBalanced.setSelectedIcon(balancedSelectedIcon); // Selected stat
+        
+         rdSodium = new JRadioButton("  Low-Sodium");
+        rdSodium.setForeground(new Color(57, 36, 19));
+        rdSodium.setFocusPainted(false);
+        rdSodium.setBorder(null);
+        rdSodium.setBackground(new Color(164, 229, 255));
+        rdSodium.setBounds(629, 163, 263, 45);
+        Icon sodiumDefaultIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\sodiumDefaultIcon.png"); // Custom radio button icon
+        Icon sodiumSelectedIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\sodiumSelectedIcon.png"); // Custom selected radio button icon
+        rdSodium.setIcon(sodiumDefaultIcon); // Default state
+        rdSodium.setSelectedIcon(sodiumSelectedIcon); // Selected stat
+        
+         rdCarbs = new JRadioButton("  Low-Carbs");
+        rdCarbs.setForeground(new Color(255, 145, 77));
+        rdCarbs.setFocusPainted(false);
+        rdCarbs.setBorder(null);
+        rdCarbs.setBackground(new Color(164, 229, 255));
+        rdCarbs.setBounds(629, 263, 247, 45);
+        Icon carbsDefaultIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\carbDefaultIcon.png"); // Custom radio button icon
+        Icon carbsSelectedIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\carbSelectedIcon.png"); // Custom selected radio button icon
+        rdCarbs.setIcon(carbsDefaultIcon); // Default state
+        rdCarbs.setSelectedIcon(carbsSelectedIcon); // Selected stat
+        
+         rdGluten = new JRadioButton("  Gluten-Free");
+        rdGluten.setForeground(new Color(94, 23, 235));
+        rdGluten.setFocusPainted(false);
+        rdGluten.setBorder(null);
+        rdGluten.setBackground(new Color(164, 229, 255));
+        rdGluten.setBounds(615, 360, 247, 45);
+        Icon glutenDefaultIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\glutenDefaultIcon.png"); // Custom radio button icon
+        Icon glutenSelectedIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\glutenSelectedIcon.png"); // Custom selected radio button icon
+        rdGluten.setIcon(glutenDefaultIcon); // Default state
+        rdGluten.setSelectedIcon(glutenSelectedIcon); // Selected stat
+        
+         rdVita = new JRadioButton("<html> Vitamins and<br/>Minerals Focused </html>");
+        rdVita.setForeground(new Color(78, 127, 28));
+        rdVita.setFocusPainted(false);
+        rdVita.setBorder(null);
+        rdVita.setBackground(new Color(164, 229, 255));
+        rdVita.setBounds(595, 456, 279, 114);
+        Icon vitaDefaultIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\vitaDefaultIcon.png"); // Custom radio button icon
+        Icon vitaSelectedIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\vitaSelectedIcon.png"); // Custom selected radio button icon
+        rdVita.setIcon(vitaDefaultIcon); // Default state
+        rdVita.setSelectedIcon(vitaSelectedIcon); // Selected stat
+        
+        //FONT
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\Shrikhand-Regular.otf")).deriveFont(28f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            rdHighProtein.setFont(font);
+            rdHeart.setFont(font);
+            rdVegetarian.setFont(font);
+            rdCalorie.setFont(font);
+            rdSodium.setFont(font);
+            rdCarbs.setFont(font);
+            rdGluten.setFont(font);
+            rdBalanced.setFont(font);
+            rdVita.setFont(font);
 
-        frame.getContentPane().add(dietaryPanel);
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        JButton btnNext = new JButton("");
+        btnNext.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnNextIcon.png"));
+        btnNext.setOpaque(false);
+        btnNext.setContentAreaFilled(false);
+        btnNext.setBorderPainted(false);
+        btnNext.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			    high_protein = rdHighProtein.isSelected();
+			    heart_healthy = rdHeart.isSelected();
+			    vegetarian = rdVegetarian.isSelected();
+			    low_calorie = rdCalorie.isSelected();
+			    balanced_nutrition = rdBalanced.isSelected();
+			    low_sodium = rdSodium.isSelected();
+			    low_carb = rdCarbs.isSelected();
+			    gluten_free = rdGluten.isSelected();
+			    vitamins_minerals_focused = rdVita.isSelected();			
+		        
+		        
+		        budgetPanel = createBudgetPanel(low_calorie, vegetarian, low_sodium,
+		    			 high_protein, heart_healthy, balanced_nutrition,  low_carb, gluten_free, vitamins_minerals_focused);
+		        
+		        frame.getContentPane().remove(panel);
+		        frame.getContentPane().add(budgetPanel);
+			    frame.revalidate();
+		        frame.repaint();
+
+			}
+        	
+        });
+        btnNext.setBounds(786, 704, 106, 52);
+ 
+        
+        JButton btnSave = new JButton("");
+        btnSave.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSaveIcon.png"));
+        btnSave.setOpaque(false);
+        btnSave.setContentAreaFilled(false);
+        btnSave.setBorderPainted(false);
+        btnSave.setBounds(656, 704, 106, 52);  
+        btnSave.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(rdHighProtein.isSelected()) {
+					high_protein = true;
+				}else if(rdHeart.isSelected()) {
+					heart_healthy = true;
+				}else if(rdVegetarian.isSelected()) {
+					vegetarian = true;
+				}else if(rdCalorie.isSelected()) {
+					low_calorie = true;
+				}else if(rdBalanced.isSelected()) {
+					balanced_nutrition = true;
+				}else if(rdSodium.isSelected()) {
+					low_sodium = true;
+				}else if(rdCarbs.isSelected()) {
+					low_carb = true;
+				}else if(rdGluten.isSelected()) {
+					gluten_free = true;
+				}else if(rdVita.isSelected()) {
+					vitamins_minerals_focused = true;
+				}				
+			}
+        	
+        });
+        
+        panel.add(rdVita); 
+        panel.add(rdGluten);
+        panel.add(rdCarbs);
+        panel.add(rdSodium);
+        panel.add(rdBalanced);
+        panel.add(rdCalorie);
+        panel.add(rdVegetarian);
+        panel.add(rdHeart);
+        panel.add(btnSave);
+        panel.add(rdHighProtein);
+        panel.add(btnNext);
+        
+        frame.getContentPane().add(panel);
         
    
 	}
-	private JPanel createBudgetPanel() {
+	private JPanel createBudgetPanel(boolean low_calorie,boolean vegetarian,boolean low_sodium,
+			boolean high_protein, boolean heart_healthy,boolean balanced_nutrition, boolean low_carb,boolean gluten_free,boolean vitamins_minerals_focused) {
         ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\budgetPanelImage.png");
         panel.setBounds(0, 0, 940, 788);
         panel.setLayout(null);
@@ -156,7 +369,26 @@ public class cookFrame {
         btnNext.setOpaque(false);
         btnNext.setContentAreaFilled(false);
         btnNext.setBorderPainted(false);
+        btnNext.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				java.lang.String priceT = txtFieldBugdet.getText();
+				int price = Integer.parseInt(priceT);
+				if(high_protein == true && low_carb == true && vegetarian == true && price >= 200) {
+					tofuPanel = createTofuPanel();
+					frame.getContentPane().add(tofuPanel);
+					frame.getContentPane().remove(budgetPanel);
+					frame.getContentPane().remove(panel);
+				    frame.revalidate();
+			        frame.repaint();
+
+				}
+				}
+        	
+        });
         btnNext.setBounds(786, 704, 106, 52);
+        
         
         JButton btnSave = new JButton("");
         btnSave.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSaveIcon.png"));
@@ -256,153 +488,63 @@ public class cookFrame {
 		
 		return panel;
 	}
-
-	private JPanel createDietaryPanel() {
-        
-        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\dietaryPanelImage.png");
+	
+	private JPanel createTofuPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\tofuImage.png");
         panel.setBounds(0, 0, 940, 788);
         panel.setLayout(null);
-		
         
-        JButton btnNext = new JButton("");
-        btnNext.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnNextIcon.png"));
-        btnNext.setOpaque(false);
-        btnNext.setContentAreaFilled(false);
-        btnNext.setBorderPainted(false);
-        btnNext.addActionListener(new ActionListener() {
-
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showBudgetPanel();
+				tofuPanel2 = createTofuPanel2();
+				frame.getContentPane().add(tofuPanel2);
+				frame.getContentPane().remove(tofuPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
 			}
         	
         });
-        btnNext.setBounds(786, 704, 106, 52);
- 
         
-        JRadioButton rdHighProtein = new JRadioButton("  High Protein");
-        rdHighProtein.setBackground(new Color(164, 229, 255)); // #A4E5FF
-        rdHighProtein.setForeground(new Color(229, 175, 55));
-        rdHighProtein.setBounds(46, 163, 263, 45);
-        rdHighProtein.setBorder(null);
-        rdHighProtein.setFocusPainted(false);
+        panel.add(btnSelect);
 
-        Icon proteinDefault = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\proteinDefaultIcon.png"); // Custom radio button icon
-        Icon proteinSelected = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\proteinSelectedIcon.png");
         
-        JButton btnSave = new JButton("");
-        btnSave.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSaveIcon.png"));
-        btnSave.setOpaque(false);
-        btnSave.setContentAreaFilled(false);
-        btnSave.setBorderPainted(false);
-        btnSave.setBounds(656, 704, 106, 52);
-        rdHighProtein.setIcon(proteinDefault); // Default state
-        rdHighProtein.setSelectedIcon(proteinSelected); // Selected state       
         
-        JRadioButton rdHeart = new JRadioButton("  Heart-Healthy");
-        rdHeart.setForeground(new Color(255, 102, 196));
-        rdHeart.setFocusPainted(false);
-        rdHeart.setBorder(null);
-        rdHeart.setBackground(new Color(164, 229, 255));
-        rdHeart.setBounds(24, 263, 285, 45);
-        Icon heartDefault = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\heartDefaultIcon.png"); // Custom radio button icon
-        Icon heartSelected = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\heartSelectedIcon.png"); // Custom selected radio button icon
-        rdHeart.setIcon(heartDefault); // Default state
-        rdHeart.setSelectedIcon(heartSelected); // Selected stat
+        return panel;
+	}
+	private JPanel createTofuPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\tofuImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
         
-        JRadioButton rdVegetarian = new JRadioButton("  Vegetarian");
-        rdVegetarian.setForeground(new Color(126, 217, 87));
-        rdVegetarian.setFont(new Font("Dialog", Font.PLAIN, 21));
-        rdVegetarian.setFocusPainted(false);
-        rdVegetarian.setBorder(null);
-        rdVegetarian.setBackground(new Color(164, 229, 255));
-        rdVegetarian.setBounds(53, 360, 234, 45);
-        Icon vegeDefault = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\vegeDefaultIcon.png"); // Custom radio button icon
-        Icon vegeSelected = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\vegeSelectedIcon.png"); // Custom selected radio button icon
-        rdVegetarian.setIcon(vegeDefault); // Default state
-        rdVegetarian.setSelectedIcon(vegeSelected); // Selected stat
         
-        JRadioButton rdCalorie = new JRadioButton("  Low-Calorie");
-        rdCalorie.setForeground(new Color(218, 52, 34));
-        rdCalorie.setFocusPainted(false);
-        rdCalorie.setBorder(null);
-        rdCalorie.setBackground(new Color(164, 229, 255));
-        rdCalorie.setBounds(57, 464, 263, 45);
-        Icon calorieDefault = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\calorieDefaultIcon.png"); // Custom radio button icon
-        Icon calorieSelected = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\calorieSelectedIcon.png"); // Custom selected radio button icon
-        rdCalorie.setIcon(calorieDefault); // Default state
-        rdCalorie.setSelectedIcon(calorieSelected); // Selected stat
         
-        JRadioButton rdBalanced = new JRadioButton(" Balanced Nutrition");
-        rdBalanced.setForeground(new Color(0, 133, 200));
-        rdBalanced.setFocusPainted(false);
-        rdBalanced.setBorder(null);
-        rdBalanced.setBackground(new Color(164, 229, 255));
-        rdBalanced.setBounds(282, 693, 334, 45);
-        Icon balancedDefaultIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\balancedDefaultIcon.png"); // Custom radio button icon
-        Icon balancedSelectedIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\balancedSelectedIcon.png"); // Custom selected radio button icon
-        rdBalanced.setIcon(balancedDefaultIcon); // Default state
-        rdBalanced.setSelectedIcon(balancedSelectedIcon); // Selected stat
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
         
-        JRadioButton rdSodium = new JRadioButton("  Low-Sodium");
-        rdSodium.setForeground(new Color(57, 36, 19));
-        rdSodium.setFocusPainted(false);
-        rdSodium.setBorder(null);
-        rdSodium.setBackground(new Color(164, 229, 255));
-        rdSodium.setBounds(629, 163, 263, 45);
-        Icon sodiumDefaultIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\sodiumDefaultIcon.png"); // Custom radio button icon
-        Icon sodiumSelectedIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\sodiumSelectedIcon.png"); // Custom selected radio button icon
-        rdSodium.setIcon(sodiumDefaultIcon); // Default state
-        rdSodium.setSelectedIcon(sodiumSelectedIcon); // Selected stat
         
-        JRadioButton rdCarbs = new JRadioButton("  Low-Carbs");
-        rdCarbs.setForeground(new Color(255, 145, 77));
-        rdCarbs.setFocusPainted(false);
-        rdCarbs.setBorder(null);
-        rdCarbs.setBackground(new Color(164, 229, 255));
-        rdCarbs.setBounds(629, 263, 247, 45);
-        Icon carbsDefaultIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\carbDefaultIcon.png"); // Custom radio button icon
-        Icon carbsSelectedIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\carbSelectedIcon.png"); // Custom selected radio button icon
-        rdCarbs.setIcon(carbsDefaultIcon); // Default state
-        rdCarbs.setSelectedIcon(carbsSelectedIcon); // Selected stat
-        
-        JRadioButton rdGluten = new JRadioButton("  Gluten-Free");
-        rdGluten.setForeground(new Color(94, 23, 235));
-        rdGluten.setFocusPainted(false);
-        rdGluten.setBorder(null);
-        rdGluten.setBackground(new Color(164, 229, 255));
-        rdGluten.setBounds(615, 360, 247, 45);
-        Icon glutenDefaultIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\glutenDefaultIcon.png"); // Custom radio button icon
-        Icon glutenSelectedIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\glutenSelectedIcon.png"); // Custom selected radio button icon
-        rdGluten.setIcon(glutenDefaultIcon); // Default state
-        rdGluten.setSelectedIcon(glutenSelectedIcon); // Selected stat
-        
-        JRadioButton rdVita = new JRadioButton("<html> Vitamins and<br/>Minerals Focused </html>");
-        rdVita.setForeground(new Color(78, 127, 28));
-        rdVita.setFocusPainted(false);
-        rdVita.setBorder(null);
-        rdVita.setBackground(new Color(164, 229, 255));
-        rdVita.setBounds(595, 456, 279, 114);
-        Icon vitaDefaultIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\vitaDefaultIcon.png"); // Custom radio button icon
-        Icon vitaSelectedIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\vitaSelectedIcon.png"); // Custom selected radio button icon
-        rdVita.setIcon(vitaDefaultIcon); // Default state
-        rdVita.setSelectedIcon(vitaSelectedIcon); // Selected stat
-        
-        //FONT
         try {
-			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\Shrikhand-Regular.otf")).deriveFont(28f);
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
             // Register the font with the Graphics Environment
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
-            rdHighProtein.setFont(font);
-            rdHeart.setFont(font);
-            rdVegetarian.setFont(font);
-            rdCalorie.setFont(font);
-            rdSodium.setFont(font);
-            rdCarbs.setFont(font);
-            rdGluten.setFont(font);
-            rdBalanced.setFont(font);
-            rdVita.setFont(font);
+            textField.setFont(font);
+            
 
 		} catch (FontFormatException e1) {
 			// TODO Auto-generated catch block
@@ -412,24 +554,142 @@ public class cookFrame {
 			e1.printStackTrace();
 		}
         
-        panel.add(rdVita); 
-        panel.add(rdGluten);
-        panel.add(rdCarbs);
-        panel.add(rdSodium);
-        panel.add(rdBalanced);
-        panel.add(rdCalorie);
-        panel.add(rdVegetarian);
-        panel.add(rdHeart);
-        panel.add(btnSave);
-        panel.add(rdHighProtein);
-        panel.add(btnNext);
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
 
         
-		return panel;
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
 	}
 	
-	public void showBudgetPanel() {
+	private void showTofuPanel() {
+		tofuPanel = createTofuPanel();
+		frame.getContentPane().remove(panel);
 		frame.getContentPane().remove(dietaryPanel);
+		frame.getContentPane().add(tofuPanel);
+	    frame.revalidate();
+        frame.repaint();
+
+	}
+	
+	
+	
+	
+	
+	public void showBudgetPanel(boolean low_calorie,boolean vegetarian,boolean low_sodium,
+			boolean high_protein, boolean heart_healthy,boolean balanced_nutrition, boolean low_carb,boolean gluten_free,boolean vitamins_minerals_focused) 
+	{
+		frame.getContentPane().remove(dietaryPanel);
+        budgetPanel = createBudgetPanel(low_calorie, vegetarian, low_sodium,
+    			 high_protein, heart_healthy, balanced_nutrition,  low_carb, gluten_free, vitamins_minerals_focused);
+        
 		frame.getContentPane().add(budgetPanel);
         frame.revalidate();
         frame.repaint();
