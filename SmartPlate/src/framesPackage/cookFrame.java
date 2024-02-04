@@ -32,7 +32,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class cookFrame {
+public class cookFrame extends loadingDialog{
 
 	private JFrame frame;
 	static final User String = null;
@@ -40,13 +40,15 @@ public class cookFrame {
     private JLabel lblName;
     DatabaseConnection base = new DatabaseConnection();
     private String name;
-    private JPanel panel, dietaryPanel, budgetPanel, tofuPanel, tofuPanel2, chopsueyPanel, chopsueyPanel2;
+    private JPanel panel, dietaryPanel, budgetPanel, tofuPanel, tofuPanel2, chopsueyPanel, chopsueyPanel2, creamyPanel, creamyPanel2, sinigangPanel, sinigangPanel2, calamansiPanel, calamansiPanel2,
+    tokwaPanel, tokwaPanel2, ginilingPanel, ginilingPanel2, pastaPanel, pastaPanel2, sandwichPanel, sandwichPanel2, broccoliPanel, broccoliPanel2, upoPanel, upoPanel2,
+    eggplantPanel, eggplantPanel2, sweetporkPanel, sweetporkPanel2, eggPanel, eggPanel2;
 	private JTextField txtFieldBugdet;
-	private int price = 0;
 	private boolean low_calorie = false, vegetarian = false, low_sodium = false,
 	high_protein, heart_healthy = false, balanced_nutrition = false, low_carb = false,gluten_free = false, vitamins_minerals_focused = false;
 	private JRadioButton rdHighProtein, rdHeart, rdVegetarian, rdCalorie, rdBalanced, rdSodium, rdCarbs, rdGluten, rdVita;
 	JProgressBar progressBar;
+	loadingDialog load = new loadingDialog();
 
     
 	/**
@@ -379,95 +381,117 @@ public class cookFrame {
 			public void actionPerformed(ActionEvent e) {
 				java.lang.String priceT = txtFieldBugdet.getText();
 				int price = Integer.parseInt(priceT);
-		        if (high_protein && low_carb && vegetarian && price >= 200) {
-		            // Create the modal JDialog for the loading screen
-		            final JDialog loadingDialog = new JDialog();
-		            loadingDialog.setTitle("Suggesting...");
-		            loadingDialog.setModal(true); // Set modal to block user input to other windows
-		            loadingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // Prevent closing
-		            loadingDialog.setLocation(790, 500); // This positions the dialog at coordinates (100, 100) on the screen.
-		            ImageIcon icon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\SmartPlateLogo1.png");
-		            // Set the icon for the dialog
-		            loadingDialog.setIconImage(icon.getImage());
-		            // Create a progress bar with indeterminate mode
-		            JProgressBar progressBar = new JProgressBar();
-		            progressBar.setPreferredSize(new Dimension(350, 20)); // Set preferred size
-		            progressBar.setIndeterminate(true);
-		            progressBar.setForeground(new Color(0, 168, 89)); // Green color
-		            loadingDialog.getContentPane().add(progressBar); // Add progress bar to dialog
-		            loadingDialog.pack(); // Adjust dialog size to fit its contents
-
-		            // Use a SwingWorker to perform background task
-		            SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-		                @Override
-		                protected Void doInBackground() throws Exception {
-		                    // Perform time-consuming task here
-		                    Thread.sleep(2000); // Simulate task duration
-		                    return null;
-		                }
-
-		                @Override
-		                protected void done() {
-		                    // Close the loading screen once the task is done
-		                    loadingDialog.dispose();
-
-		                    // Proceed with your next operations, such as showing another panel
+		        if (high_protein == true && low_carb == true && vegetarian == true && price >= 200 && price <= 220) {
+		        	load.showSuggestingDialog();
 		                    tofuPanel = createTofuPanel();
-		                    // Assuming 'frame' is the main JFrame of your application
 		                    frame.getContentPane().add(tofuPanel);
 		                    frame.getContentPane().removeAll(); // Remove all components
 		                    frame.getContentPane().add(tofuPanel); // Add new panel
 		                    frame.revalidate();
 		                    frame.repaint();
-		                }
-		            };
-
-		            worker.execute(); // Start the task execution
-		            loadingDialog.setVisible(true); // Display the loading dialog; blocks here until task is done
-		        }else if(vitamins_minerals_focused == true && balanced_nutrition == true && heart_healthy == true && price >= 100) {
-		            // Create the modal JDialog for the loading screen
-		            final JDialog loadingDialog = new JDialog();
-		            loadingDialog.setTitle("Suggesting...");
-		            loadingDialog.setModal(true); // Set modal to block user input to other windows
-		            loadingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // Prevent closing
-		            loadingDialog.setLocation(790, 500); // This positions the dialog at coordinates (100, 100) on the screen.
-		            ImageIcon icon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\SmartPlateLogo1.png");
-		            // Set the icon for the dialog
-		            loadingDialog.setIconImage(icon.getImage());
-		            // Create a progress bar with indeterminate mode
-		            JProgressBar progressBar = new JProgressBar();
-		            progressBar.setPreferredSize(new Dimension(350, 25)); // Set preferred size
-		            progressBar.setIndeterminate(true);
-		            progressBar.setForeground(new Color(0, 168, 89)); // Green color
-		            loadingDialog.getContentPane().add(progressBar); // Add progress bar to dialog
-		            loadingDialog.pack(); // Adjust dialog size to fit its contents
-
-		            // Use a SwingWorker to perform background task
-		            SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-		                @Override
-		                protected Void doInBackground() throws Exception {
-		                    // Perform time-consuming task here
-		                    Thread.sleep(2000); // Simulate task duration
-		                    return null;
-		                }
-
-		                @Override
-		                protected void done() {
-		                    // Close the loading screen once the task is done
-		                    loadingDialog.dispose();
-		                    chopsueyPanel = createChopsueyPanel();
+		        }else if(vitamins_minerals_focused == true && balanced_nutrition == true && heart_healthy == true && low_carb == false && price >= 100 && price <= 120) {
+		        	load.showSuggestingDialog();
+		        	chopsueyPanel = createChopsueyPanel();
+		        	
 							frame.getContentPane().add(chopsueyPanel);
 							frame.getContentPane().remove(budgetPanel);
 							frame.getContentPane().remove(panel);
 						    frame.revalidate();
+					        frame.repaint();					        
+				}else if(high_protein == true && vitamins_minerals_focused == true && balanced_nutrition == true && low_carb == false && price >= 250 && price <= 270) {
+		        	load.showSuggestingDialog();
+		                    creamyPanel = createCreamyPanel();
+							frame.getContentPane().add(creamyPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
 					        frame.repaint();
-		                }
-		            };
-
-		            worker.execute(); // Start the task execution
-		            loadingDialog.setVisible(true); // Display the loading dialog; blocks here until task is done
-				}else if(heart_healthy == true) {
+				}else if(high_protein == true && balanced_nutrition == true && vitamins_minerals_focused == true && low_carb == true && price >= 250 && price <= 290) {
+		        	load.showSuggestingDialog();
+		                    sinigangPanel = createSinigangPanel();
+							frame.getContentPane().add(sinigangPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
+					        frame.repaint();
+				}else if(high_protein == true && low_calorie == true && heart_healthy == true && balanced_nutrition == true && low_sodium == true && gluten_free == true 
+						&& vitamins_minerals_focused == true && low_carb == true && vegetarian == false && price >= 160 && price <= 180) {
+		        	load.showSuggestingDialog();
+		                    calamansiPanel = createCalamansiPanel();
+							frame.getContentPane().add(calamansiPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
+					        frame.repaint();
+				}else if(high_protein == true && low_calorie == true && heart_healthy == true && balanced_nutrition == true && low_carb == true && vegetarian == true && 
+						vitamins_minerals_focused == true && gluten_free == false && price >= 100 && price <= 120) {
+		        	load.showSuggestingDialog();
+                    tokwaPanel = createTokwaPanel();
+							frame.getContentPane().add(tokwaPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
+					        frame.repaint();
 					
+				}else if(low_calorie == true && low_sodium == true && low_carb == true && price >= 100 && price <= 120) {
+			       	load.showSuggestingDialog();
+                    pastaPanel = createPastaPanel();
+							frame.getContentPane().add(pastaPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
+					        frame.repaint();
+				}else if(high_protein == true && low_sodium == true && vitamins_minerals_focused == true && price >= 100 && price <= 120) {
+			       	load.showSuggestingDialog();
+                    sandwichPanel = createSandwichPanel();
+							frame.getContentPane().add(sandwichPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
+					        frame.repaint();
+				}else if(high_protein == true && heart_healthy == true && low_calorie == true && low_carb == true && vitamins_minerals_focused == true && vegetarian == true &&
+						balanced_nutrition == true && price >= 180 && price <= 200) {
+			       	load.showSuggestingDialog();
+                    broccoliPanel = createBroccoliPanel();
+							frame.getContentPane().add(broccoliPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
+					        frame.repaint();
+				}else if(high_protein == true && heart_healthy == true && low_calorie == true && low_carb == true && vitamins_minerals_focused == true && balanced_nutrition == true && gluten_free == true 
+						&& price >= 100 && price <= 120) {
+			       	load.showSuggestingDialog();
+                    upoPanel = createUpoPanel();
+							frame.getContentPane().add(upoPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
+					        frame.repaint();
+				}else if(vegetarian == true && heart_healthy == true && low_calorie == true && low_carb == true && vitamins_minerals_focused == true && balanced_nutrition == true && price >= 90 && price <= 100) {
+			       	load.showSuggestingDialog();
+                    eggplantPanel = createEggplantPanel();
+							frame.getContentPane().add(eggplantPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
+					        frame.repaint();
+				}else if(vitamins_minerals_focused == true && heart_healthy == true && low_carb == true && balanced_nutrition == true && high_protein == true && price >= 400 &&
+						price <= 420) {
+			       	load.showSuggestingDialog();
+                    sweetporkPanel = createSweetPork();
+							frame.getContentPane().add(sweetporkPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
+					        frame.repaint();
+				}else if(low_calorie == true && balanced_nutrition == true && low_carb == false && price >= 15 && price <= 35) {
+			       	load.showSuggestingDialog();
+                    eggPanel = createEggPanel();
+							frame.getContentPane().add(eggPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
+					        frame.repaint();
 				}
 				}
         	
@@ -675,53 +699,7 @@ public class cookFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-		        final JDialog loadingDialog = new JDialog(frame, "Cooking...", true);
-		        loadingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		        loadingDialog.setLocationRelativeTo(frame); // Center relative to the frame
-	            loadingDialog.setLocation(790, 500); // This positions the dialog at coordinates (100, 100) on the screen.
-	            loadingDialog.getContentPane().setBackground(Color.BLACK); // Set the background color of the content pane to black.
-
-		        ImageIcon icon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\SmartPlateLogo1.png");
-		        loadingDialog.setIconImage(icon.getImage());
-
-		        // Set the dialog layout
-		        loadingDialog.setLayout(new BorderLayout());
-
-		        JProgressBar progressBar = new JProgressBar();
-		        progressBar.setIndeterminate(true);
-		        progressBar.setPreferredSize(new Dimension(350, 30));
-		        progressBar.setForeground(new Color(0, 168, 89));
-		        loadingDialog.add(progressBar, BorderLayout.SOUTH);
-
-		        // Path to the GIF
-		        ImageIcon gifIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\cookingGif.gif");
-		        JLabel gifLabel = new JLabel(gifIcon);
-		        loadingDialog.add(gifLabel, BorderLayout.NORTH);
-
-		        loadingDialog.pack();
-
-		        // Use a SwingWorker to perform background task
-		        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-		            @Override
-		            protected Void doInBackground() throws Exception {
-		                // Perform time-consuming task here
-		                Thread.sleep(2000); // Simulate task duration
-		                return null;
-		            }
-
-		            @Override
-		            protected void done() {
-		                // Close the loading dialog
-		                loadingDialog.dispose();
-
-		                // Proceed with your next operations...
-		            }
-		        };
-
-		        worker.execute(); // Start the task execution
-
-		        // Display the loading dialog; it blocks here until disposed
-		        loadingDialog.setVisible(true);
+				load.showCookingDialog();
 		    }
         	
         });
@@ -905,6 +883,1517 @@ public class cookFrame {
         btnCook.setOpaque(false);
         btnCook.setContentAreaFilled(false);
         btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	private JPanel createCreamyPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\creamyCImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				creamyPanel2 = createCreamyPanel2();
+				frame.getContentPane().add(creamyPanel2);
+				frame.getContentPane().remove(creamyPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
+	private JPanel createCreamyPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\creamyCImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	private JPanel createSinigangPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\sinigangImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sinigangPanel2 = createSinigangPanel2();
+				frame.getContentPane().add(sinigangPanel2);
+				frame.getContentPane().remove(sinigangPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
+	
+	private JPanel createSinigangPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\sinigangImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	private JPanel createCalamansiPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\calamansiImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				calamansiPanel2 = createCalamansiPanel2();
+				frame.getContentPane().add(calamansiPanel2);
+				frame.getContentPane().remove(calamansiPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
+	
+	private JPanel createCalamansiPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\calamansiImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	private JPanel createTokwaPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\tokwaImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tokwaPanel2 = createTokwaPanel2();
+				frame.getContentPane().add(tokwaPanel2);
+				frame.getContentPane().remove(tokwaPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
+	
+	private JPanel createTokwaPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\tokwaImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	private JPanel createGinilingPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\ginilingImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ginilingPanel2 = createGinilingPanel2();
+				frame.getContentPane().add(ginilingPanel2);
+				frame.getContentPane().remove(ginilingPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
+	
+	private JPanel createGinilingPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\ginilingImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	private JPanel createPastaPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\pastaImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pastaPanel2 = createPastaPanel2();
+				frame.getContentPane().add(pastaPanel2);
+				frame.getContentPane().remove(pastaPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
+	
+	private JPanel createPastaPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\pastaImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	private JPanel createSandwichPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\sandwichImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sandwichPanel2 = createSandwichPanel2();
+				frame.getContentPane().add(sandwichPanel2);
+				frame.getContentPane().remove(sandwichPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
+	
+	private JPanel createSandwichPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\sandwichImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	private JPanel createBroccoliPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\broccoliImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				broccoliPanel2 = createBroccoliPanel2();
+				frame.getContentPane().add(broccoliPanel2);
+				frame.getContentPane().remove(broccoliPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
+	
+	private JPanel createBroccoliPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\broccoliImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
         panel.add(btnCook);
         
         // Add a focus listener to handle placeholder behavior
@@ -988,20 +2477,758 @@ public class cookFrame {
         return panel;
 	}
 	
-	private void showTofuPanel() {
-		tofuPanel = createTofuPanel();
-		frame.getContentPane().remove(panel);
-		frame.getContentPane().remove(dietaryPanel);
-		frame.getContentPane().add(tofuPanel);
-	    frame.revalidate();
-        frame.repaint();
+	private JPanel createUpoPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\upoImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				upoPanel2 = createUpoPanel2();
+				frame.getContentPane().add(upoPanel2);
+				frame.getContentPane().remove(upoPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
 
+        
+        
+        return panel;
 	}
 	
+	private JPanel createUpoPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\upoImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	private JPanel createEggplantPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\eggplantImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				eggplantPanel2 = createEggplantPanel2();
+				frame.getContentPane().add(eggplantPanel2);
+				frame.getContentPane().remove(eggplantPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
 	
+	private JPanel createEggplantPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\eggplantImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	private JPanel createSweetPork() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\sweetImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sweetporkPanel2 = createSweetPork2();
+				frame.getContentPane().add(sweetporkPanel2);
+				frame.getContentPane().remove(sweetporkPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
 	
+	private JPanel createSweetPork2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\sweetImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	private JPanel createEggPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\eggImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				eggPanel2 = createEggPanel2();
+				frame.getContentPane().add(eggPanel2);
+				frame.getContentPane().remove(eggPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
 	
-	
+	private JPanel createEggPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\eggImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load.showCookingDialog();
+		    }
+        	
+        });
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
 	public void showBudgetPanel(boolean low_calorie,boolean vegetarian,boolean low_sodium,
 			boolean high_protein, boolean heart_healthy,boolean balanced_nutrition, boolean low_carb,boolean gluten_free,boolean vitamins_minerals_focused) 
 	{
