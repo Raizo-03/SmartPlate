@@ -671,6 +671,60 @@ public class cookFrame {
         btnCook.setOpaque(false);
         btnCook.setContentAreaFilled(false);
         btnCook.setBorderPainted(false);
+        btnCook.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+		        final JDialog loadingDialog = new JDialog(frame, "Cooking...", true);
+		        loadingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		        loadingDialog.setLocationRelativeTo(frame); // Center relative to the frame
+	            loadingDialog.setLocation(790, 500); // This positions the dialog at coordinates (100, 100) on the screen.
+	            loadingDialog.getContentPane().setBackground(Color.BLACK); // Set the background color of the content pane to black.
+
+		        ImageIcon icon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\SmartPlateLogo1.png");
+		        loadingDialog.setIconImage(icon.getImage());
+
+		        // Set the dialog layout
+		        loadingDialog.setLayout(new BorderLayout());
+
+		        JProgressBar progressBar = new JProgressBar();
+		        progressBar.setIndeterminate(true);
+		        progressBar.setPreferredSize(new Dimension(350, 30));
+		        progressBar.setForeground(new Color(0, 168, 89));
+		        loadingDialog.add(progressBar, BorderLayout.SOUTH);
+
+		        // Path to the GIF
+		        ImageIcon gifIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\cookingGif.gif");
+		        JLabel gifLabel = new JLabel(gifIcon);
+		        loadingDialog.add(gifLabel, BorderLayout.NORTH);
+
+		        loadingDialog.pack();
+
+		        // Use a SwingWorker to perform background task
+		        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+		            @Override
+		            protected Void doInBackground() throws Exception {
+		                // Perform time-consuming task here
+		                Thread.sleep(2000); // Simulate task duration
+		                return null;
+		            }
+
+		            @Override
+		            protected void done() {
+		                // Close the loading dialog
+		                loadingDialog.dispose();
+
+		                // Proceed with your next operations...
+		            }
+		        };
+
+		        worker.execute(); // Start the task execution
+
+		        // Display the loading dialog; it blocks here until disposed
+		        loadingDialog.setVisible(true);
+		    }
+        	
+        });
         panel.add(btnCook);
         
         // Add a focus listener to handle placeholder behavior
