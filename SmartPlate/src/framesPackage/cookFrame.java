@@ -5,8 +5,11 @@ import main.SessionManager;
 import main.DatabaseConnection;
 import main.User;
 import main.UserAuthentication;
+import javax.swing.*;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,6 +23,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -36,13 +40,13 @@ public class cookFrame {
     private JLabel lblName;
     DatabaseConnection base = new DatabaseConnection();
     private String name;
-    private JPanel panel, dietaryPanel, budgetPanel, tofuPanel, tofuPanel2;
+    private JPanel panel, dietaryPanel, budgetPanel, tofuPanel, tofuPanel2, chopsueyPanel, chopsueyPanel2;
 	private JTextField txtFieldBugdet;
 	private int price = 0;
 	private boolean low_calorie = false, vegetarian = false, low_sodium = false,
 	high_protein, heart_healthy = false, balanced_nutrition = false, low_carb = false,gluten_free = false, vitamins_minerals_focused = false;
 	private JRadioButton rdHighProtein, rdHeart, rdVegetarian, rdCalorie, rdBalanced, rdSodium, rdCarbs, rdGluten, rdVita;
-
+	JProgressBar progressBar;
 
     
 	/**
@@ -375,14 +379,95 @@ public class cookFrame {
 			public void actionPerformed(ActionEvent e) {
 				java.lang.String priceT = txtFieldBugdet.getText();
 				int price = Integer.parseInt(priceT);
-				if(high_protein == true && low_carb == true && vegetarian == true && price >= 200) {
-					tofuPanel = createTofuPanel();
-					frame.getContentPane().add(tofuPanel);
-					frame.getContentPane().remove(budgetPanel);
-					frame.getContentPane().remove(panel);
-				    frame.revalidate();
-			        frame.repaint();
+		        if (high_protein && low_carb && vegetarian && price >= 200) {
+		            // Create the modal JDialog for the loading screen
+		            final JDialog loadingDialog = new JDialog();
+		            loadingDialog.setTitle("Suggesting...");
+		            loadingDialog.setModal(true); // Set modal to block user input to other windows
+		            loadingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // Prevent closing
+		            loadingDialog.setLocation(790, 500); // This positions the dialog at coordinates (100, 100) on the screen.
+		            ImageIcon icon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\SmartPlateLogo1.png");
+		            // Set the icon for the dialog
+		            loadingDialog.setIconImage(icon.getImage());
+		            // Create a progress bar with indeterminate mode
+		            JProgressBar progressBar = new JProgressBar();
+		            progressBar.setPreferredSize(new Dimension(350, 20)); // Set preferred size
+		            progressBar.setIndeterminate(true);
+		            progressBar.setForeground(new Color(0, 168, 89)); // Green color
+		            loadingDialog.getContentPane().add(progressBar); // Add progress bar to dialog
+		            loadingDialog.pack(); // Adjust dialog size to fit its contents
 
+		            // Use a SwingWorker to perform background task
+		            SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+		                @Override
+		                protected Void doInBackground() throws Exception {
+		                    // Perform time-consuming task here
+		                    Thread.sleep(2000); // Simulate task duration
+		                    return null;
+		                }
+
+		                @Override
+		                protected void done() {
+		                    // Close the loading screen once the task is done
+		                    loadingDialog.dispose();
+
+		                    // Proceed with your next operations, such as showing another panel
+		                    tofuPanel = createTofuPanel();
+		                    // Assuming 'frame' is the main JFrame of your application
+		                    frame.getContentPane().add(tofuPanel);
+		                    frame.getContentPane().removeAll(); // Remove all components
+		                    frame.getContentPane().add(tofuPanel); // Add new panel
+		                    frame.revalidate();
+		                    frame.repaint();
+		                }
+		            };
+
+		            worker.execute(); // Start the task execution
+		            loadingDialog.setVisible(true); // Display the loading dialog; blocks here until task is done
+		        }else if(vitamins_minerals_focused == true && balanced_nutrition == true && heart_healthy == true && price >= 100) {
+		            // Create the modal JDialog for the loading screen
+		            final JDialog loadingDialog = new JDialog();
+		            loadingDialog.setTitle("Suggesting...");
+		            loadingDialog.setModal(true); // Set modal to block user input to other windows
+		            loadingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // Prevent closing
+		            loadingDialog.setLocation(790, 500); // This positions the dialog at coordinates (100, 100) on the screen.
+		            ImageIcon icon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\SmartPlateLogo1.png");
+		            // Set the icon for the dialog
+		            loadingDialog.setIconImage(icon.getImage());
+		            // Create a progress bar with indeterminate mode
+		            JProgressBar progressBar = new JProgressBar();
+		            progressBar.setPreferredSize(new Dimension(350, 25)); // Set preferred size
+		            progressBar.setIndeterminate(true);
+		            progressBar.setForeground(new Color(0, 168, 89)); // Green color
+		            loadingDialog.getContentPane().add(progressBar); // Add progress bar to dialog
+		            loadingDialog.pack(); // Adjust dialog size to fit its contents
+
+		            // Use a SwingWorker to perform background task
+		            SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+		                @Override
+		                protected Void doInBackground() throws Exception {
+		                    // Perform time-consuming task here
+		                    Thread.sleep(2000); // Simulate task duration
+		                    return null;
+		                }
+
+		                @Override
+		                protected void done() {
+		                    // Close the loading screen once the task is done
+		                    loadingDialog.dispose();
+		                    chopsueyPanel = createChopsueyPanel();
+							frame.getContentPane().add(chopsueyPanel);
+							frame.getContentPane().remove(budgetPanel);
+							frame.getContentPane().remove(panel);
+						    frame.revalidate();
+					        frame.repaint();
+		                }
+		            };
+
+		            worker.execute(); // Start the task execution
+		            loadingDialog.setVisible(true); // Display the loading dialog; blocks here until task is done
+				}else if(heart_healthy == true) {
+					
 				}
 				}
         	
@@ -490,7 +575,7 @@ public class cookFrame {
 	}
 	
 	private JPanel createTofuPanel() {
-        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\tofuImage.png");
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\tofuImage.png");
         panel.setBounds(0, 0, 940, 788);
         panel.setLayout(null);
         
@@ -521,7 +606,187 @@ public class cookFrame {
         return panel;
 	}
 	private JPanel createTofuPanel2() {
-	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\tofuImage2.png");
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\tofuImage2.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        
+        
+        JTextField textField = new JTextField();
+        textField.setBounds(312, 368, 98, 53);
+        frame.getContentPane().add(textField);
+        textField.setColumns(10);
+        textField.setColumns(10);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setForeground(new Color(241, 143, 46));
+        textField.setBackground(new Color(252, 246, 219));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        
+        
+        try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\fonts\\FredokaOne-Regular.otf")).deriveFont(35f);
+            // Register the font with the Graphics Environment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            textField.setFont(font);
+            
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        final String userNplaceholder = "1";
+        textField.setText(userNplaceholder); // Set initial placeholder text
+        
+        JButton btnIncrease = new JButton("");
+        btnIncrease.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnIncrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnIncreaseIcon2.png"));
+        btnIncrease.setBounds(418, 372, 40, 40);
+        btnIncrease.setOpaque(false);
+        btnIncrease.setContentAreaFilled(false);
+        btnIncrease.setBorderPainted(false);
+        
+        panel.add(btnIncrease);
+        
+        JButton btnDecrease = new JButton("");
+        btnDecrease.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnDecreaseIcon2.png"));
+        btnDecrease.setBounds(265, 372, 40, 40);
+        btnDecrease.setOpaque(false);
+        btnDecrease.setContentAreaFilled(false);
+        btnDecrease.setBorderPainted(false);
+
+
+        panel.add(btnDecrease);
+        
+        JButton btnCook = new JButton("");
+        btnCook.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCokIcon.png"));
+        btnCook.setBounds(492, 377, 151, 44);
+        btnCook.setOpaque(false);
+        btnCook.setContentAreaFilled(false);
+        btnCook.setBorderPainted(false);
+        panel.add(btnCook);
+        
+        // Add a focus listener to handle placeholder behavior
+        textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+			    if (textField.getText().equals(userNplaceholder)) {
+			    	textField.setText("");
+                }				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				   if (textField.getText().isEmpty()) {
+					   textField.setText(userNplaceholder);
+	                	
+	                }				
+			}
+        });
+        
+        btnDecrease.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                baseVal--;
+                if(baseVal < 0) {
+                	JOptionPane.showMessageDialog(frame, "Cannot decrease input anymore. Limit is 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                	btnDecrease.disable();
+                	baseVal = 0;
+                }
+                String newValue = (java.lang.String.valueOf(baseVal));
+                textField.setText(newValue);
+			}
+        	
+        });
+        btnIncrease.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Read the current value from the text field
+                String currentValue = textField.getText();
+                int baseVal;
+                
+                try {
+                    // Convert the current value to an integer
+                    baseVal = Integer.parseInt(currentValue);
+                } catch (NumberFormatException ex) {
+                    // Handle the case where the text field does not contain a valid integer
+                    baseVal = 0; // or any default value you deem appropriate
+                }
+                
+                // Increment the value
+                baseVal++;
+
+                // Convert the incremented value back to a string
+                String newValue = (java.lang.String.valueOf(baseVal));
+
+                // Set the updated value back to the text field
+                textField.setText(newValue);
+            }
+        });
+        
+
+        
+        panel.add(textField);
+        panel.add(btnIncrease);
+        panel.add(btnDecrease);
+        panel.add(btnCook);
+
+        
+        
+        return panel;
+	}
+	
+	private JPanel createChopsueyPanel() {
+        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\chopsueyImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+        
+        JButton btnSelect = new JButton("");
+        btnSelect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnSelectIcon.png"));
+        btnSelect.setBounds(581, 702, 194, 58);
+        btnSelect.setOpaque(false);
+        btnSelect.setContentAreaFilled(false);
+        btnSelect.setBorderPainted(false);
+        btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				chopsueyPanel2 = createChopsueyPanel2();
+				frame.getContentPane().add(chopsueyPanel2);
+				frame.getContentPane().remove(chopsueyPanel);
+				frame.getContentPane().remove(budgetPanel);
+				frame.getContentPane().remove(panel);
+			    frame.revalidate();
+		        frame.repaint();
+			}
+        	
+        });
+        
+        panel.add(btnSelect);
+
+        
+        
+        return panel;
+	}
+	private JPanel createChopsueyPanel2() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\chopsueyImage2.png");
         panel.setBounds(0, 0, 940, 788);
         panel.setLayout(null);
         
