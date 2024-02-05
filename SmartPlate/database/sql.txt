@@ -10,8 +10,7 @@ CREATE TABLE IF NOT EXISTS UserAccounts (
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    image_path VARCHAR(255)
+    password VARCHAR(255) NOT NULL
 );
 
 -- Alter the UserAccounts table to add cooking_level
@@ -20,6 +19,7 @@ ADD COLUMN cooking_level ENUM('beginner', 'intermediate', 'advanced') DEFAULT 'b
 
 -- Add columns for allergies
 ALTER TABLE UserAccounts
+ADD COLUMN profile_picture BLOB,
 ADD COLUMN allergy_milk BOOLEAN DEFAULT FALSE,
 ADD COLUMN allergy_fish BOOLEAN DEFAULT FALSE,
 ADD COLUMN allergy_eggs BOOLEAN DEFAULT FALSE,

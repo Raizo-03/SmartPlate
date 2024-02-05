@@ -457,15 +457,15 @@ public class setupProfile {
             int response = JOptionPane.showConfirmDialog(frame, "Are you sure you want to reset your cooking level?",
                                                          "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
-                updateCookingLevel("beginner");
+                updateCookingLevel("Beginner");
                 JOptionPane.showMessageDialog(frame, "Your cooking level has been reset to beginner.", 
                                               "Reset Successful", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         
-        btnBeginner.addActionListener(e -> confirmAndUpdateLevel("beginner", "Are you sure you want to choose beginner?"));
-        btnIntermediate.addActionListener(e -> confirmAndUpdateLevel("intermediate", "Are you sure you want to choose intermediate?"));
-        btnAdvanced.addActionListener(e -> confirmAndUpdateLevel("advanced", "Are you sure you want to choose advanced?"));
+        btnBeginner.addActionListener(e -> confirmAndUpdateLevel("Beginner", "Are you sure you want to choose beginner?"));
+        btnIntermediate.addActionListener(e -> confirmAndUpdateLevel("Intermediate", "Are you sure you want to choose intermediate?"));
+        btnAdvanced.addActionListener(e -> confirmAndUpdateLevel("Advanced", "Are you sure you want to choose advanced?"));
         
         panel.add(btnBeginner);
         panel.add(btnIntermediate);

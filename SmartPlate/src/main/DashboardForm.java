@@ -220,6 +220,17 @@ public class DashboardForm {
         btnProfile.setContentAreaFilled(false);
         btnProfile.setBorderPainted(false);
         btnProfile.setBounds(165, 240, 175, 191);
+        btnProfile.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				meFrame profile = new meFrame(currentUser);
+				profile.Show();
+				frame.dispose();
+				
+			}
+        	
+        });
         panel.add(btnProfile);
         
         ImageIcon btnHistoryIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnHistoryIcon.png");
@@ -236,6 +247,17 @@ public class DashboardForm {
         btnAbout.setContentAreaFilled(false);
         btnAbout.setBorderPainted(false);
         btnAbout.setBounds(608, 240, 175, 191);
+        btnAbout.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				aboutFrame window = new aboutFrame(currentUser);
+				window.Show();
+				frame.dispose();
+			}
+        	
+        });
         panel.add(btnAbout);
 
         ImageIcon btnBudgetIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnBudgetIcon.png");
