@@ -2,7 +2,6 @@ package main;
 
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -29,7 +28,7 @@ public class LoginForm {
 	private JButton btnConnect;
     private JPanel loginPanel;
     private JPanel signUpPanel;
-    private JPanel signupSucess;
+    private JPanel signupSucess, connectPanel;
 
     private JTextField txtUsername;
     private JTextField txtPassword;
@@ -77,7 +76,7 @@ public class LoginForm {
         ImageIcon AppIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\SmartPlateLogo1.png");
         frame.setIconImage(AppIcon.getImage());
   
-        
+        connectPanel = createConnectPanel();
         
         firstPanel = new JPanel(null);
         firstPanel.setLayout(null);
@@ -128,6 +127,11 @@ public class LoginForm {
         btnExit.setBorderPainted(false);
         
         btnConnect = new JButton("");
+        btnConnect.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		showConnectPanel();       		
+        	}
+        });
         btnConnect.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnConnectIcon.png"));
         btnConnect.setFont(new Font("Tahoma", Font.PLAIN, 9));
         btnConnect.setBounds(783, 128, 135, 66);
@@ -353,7 +357,28 @@ public class LoginForm {
 	        textField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 	        return textField;
 	    }
-	
+	private JPanel createConnectPanel() {
+	    ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\connectImage.png");
+        panel.setBounds(0, 0, 940, 788);
+        panel.setLayout(null);
+		
+		JButton btnReturn = new JButton("");
+		btnReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showMainPanel();
+				
+			}
+		});
+		btnReturn.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnReturnIcon.png"));
+		btnReturn.setBounds(43, 105, 112, 56);
+		btnReturn.setOpaque(false);
+		btnReturn.setContentAreaFilled(false);
+		btnReturn.setBorderPainted(false);
+		
+		panel.add(btnReturn);
+		
+		return panel;
+	}
 	
 	  
     private JPanel createSignUpPanel() {
@@ -721,6 +746,16 @@ public class LoginForm {
         frame.getContentPane().add(loginPanel);
         frame.getContentPane().remove(signUpPanel);
         frame.getContentPane().remove(signupSucess);
+        frame.getContentPane().remove(connectPanel);
+        frame.revalidate();
+        frame.repaint();
+              
+    }
+    private void showConnectPanel() {
+        frame.getContentPane().remove(firstPanel);
+        frame.getContentPane().remove(firstPanel_1);
+        frame.getContentPane().remove(loginPanel);
+        frame.getContentPane().add(connectPanel);
         frame.revalidate();
         frame.repaint();
               
@@ -734,6 +769,7 @@ public class LoginForm {
         frame.repaint();
     }
     private void showMainPanel() {
+        frame.getContentPane().remove(connectPanel);
         frame.getContentPane().remove(loginPanel);
         frame.getContentPane().remove(signUpPanel);
         frame.getContentPane().add(firstPanel);
