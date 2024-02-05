@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.event.FocusAdapter;
 import java.awt.geom.RoundRectangle2D;
+import framesPackage.DishManager;
 
 
 
@@ -39,7 +40,7 @@ public class LoginForm {
     private JTextField txtSignPassword;
     //FOR DATABASE
     DatabaseConnection base = new DatabaseConnection();
-
+    DishManager activateDishes = new DishManager();
     
 	/**
 	 * Launch the application.
@@ -174,6 +175,7 @@ public class LoginForm {
                     	JOptionPane.showMessageDialog(frame, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
                         SessionManager.createSession(authenticatedUser);
                         setupProfile profile = new setupProfile(authenticatedUser);
+                        DishManager.updateAllDishImages();
                         profile.Show();
                     	frame.dispose();
 
