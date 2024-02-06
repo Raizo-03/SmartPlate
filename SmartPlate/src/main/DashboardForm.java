@@ -86,7 +86,7 @@ public class DashboardForm {
                         String name = resultSet.getString("name");
 
                         // Now you have the user information
-                        nameLabel.setText(name);
+                        //nameLabel.setText(name);
                         
                         //nameLabel.setVisible(false);
 

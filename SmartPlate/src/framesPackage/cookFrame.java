@@ -39,7 +39,7 @@ public class cookFrame extends loadingDialog{
     private User currentUser;
     private JLabel lblName;
     DatabaseConnection base = new DatabaseConnection();
-    private String name;
+    private String name, userName;
     private JPanel panel, dietaryPanel, budgetPanel, tofuPanel, tofuPanel2, chopsueyPanel, chopsueyPanel2, creamyPanel, creamyPanel2, sinigangPanel, sinigangPanel2, calamansiPanel, calamansiPanel2,
     tokwaPanel, tokwaPanel2, ginilingPanel, ginilingPanel2, pastaPanel, pastaPanel2, sandwichPanel, sandwichPanel2, broccoliPanel, broccoliPanel2, upoPanel, upoPanel2,
     eggplantPanel, eggplantPanel2, sweetporkPanel, sweetporkPanel2, eggPanel, eggPanel2, beefPanel, beefPanel2, tunaPanel, tunaPanel2, ricePanel, ricePanel2, pakbetPanel, pakbetPanel2;
@@ -82,6 +82,66 @@ public class cookFrame extends loadingDialog{
 	        System.out.println("User not authenticated");
 	    }
 	}
+	private void insertUserDishSelection(String username, String dishName) {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    try {
+	        connection = DatabaseConnection.getConnection();
+	        // Get the user_id based on the username
+	        String getUserIDSQL = "SELECT user_id FROM UserAccounts WHERE username = ?";
+	        preparedStatement = connection.prepareStatement(getUserIDSQL);
+	        preparedStatement.setString(1, username);
+	        resultSet = preparedStatement.executeQuery();
+	        int userId = 0;
+	        if (resultSet.next()) {
+	            userId = resultSet.getInt("user_id");
+	        }
+
+	        // Close previous PreparedStatement and ResultSet
+	        resultSet.close();
+	        preparedStatement.close();
+
+	        // Get the dish_id based on the dish name
+	        String getDishIDSQL = "SELECT id FROM DISH WHERE dish_name = ?";
+	        preparedStatement = connection.prepareStatement(getDishIDSQL);
+	        preparedStatement.setString(1, dishName);
+	        resultSet = preparedStatement.executeQuery();
+	        int dishId = 0;
+	        if (resultSet.next()) {
+	            dishId = resultSet.getInt("id");
+	        }
+
+	        // Close previous PreparedStatement and ResultSet
+	        resultSet.close();
+	        preparedStatement.close();
+
+	        if (userId > 0 && dishId > 0) {
+	            // Insert into UserDishSelections
+	            String insertSQL = "INSERT INTO UserDishSelections (user_id, dish_id) VALUES (?, ?)";
+	            preparedStatement = connection.prepareStatement(insertSQL);
+	            preparedStatement.setInt(1, userId);
+	            preparedStatement.setInt(2, dishId);
+	            int affectedRows = preparedStatement.executeUpdate();
+	            if (affectedRows > 0) {
+	                System.out.println("Selection inserted successfully.");
+	            } else {
+	                System.out.println("Failed to insert the selection.");
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (resultSet != null) resultSet.close();
+	            if (preparedStatement != null) preparedStatement.close();
+	            if (connection != null) connection.close();
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	}
+
 	
     private void fetchinguserInformation() {
         String username = currentUser.getUsername();
@@ -95,7 +155,7 @@ public class cookFrame extends loadingDialog{
                     if (resultSet.next()) {
                         // Retrieve user information from the result set
                         name = resultSet.getString("name");
-
+                        userName = username;
                         // You can update the UI or perform other actions with this information
                     } else {
                     }
@@ -746,10 +806,10 @@ public class cookFrame extends loadingDialog{
         btnCook.setContentAreaFilled(false);
         btnCook.setBorderPainted(false);
         btnCook.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "SIZZLING TOFU");
 				recipes.activatePanels("Tofu");
 				recipes.Show();
 				frame.dispose();
@@ -941,6 +1001,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "CHOP SEUY");
 				recipes.activatePanels("Chopsuey");
 				recipes.Show();
 				frame.dispose();
@@ -1131,6 +1192,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "CREAMY CHICKEN");
 				recipes.activatePanels("Creamy");
 				recipes.Show();
 				frame.dispose();
@@ -1322,6 +1384,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "SINIGANG NA BABOY");
 				recipes.activatePanels("Sinigang");
 				recipes.Show();
 				frame.dispose();
@@ -1513,6 +1576,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "CALAMANSI FISH FILLET");
 				recipes.activatePanels("Calamansi");
 				recipes.Show();
 				frame.dispose();
@@ -1704,6 +1768,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "TOKWAT KANGKONG");
 				recipes.activatePanels("Tokwa");
 				recipes.Show();
 				frame.dispose();
@@ -1895,6 +1960,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "BASIC GINILING");
 				recipes.activatePanels("Giniling");
 				recipes.Show();
 				frame.dispose();
@@ -2086,6 +2152,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "QUICK PASTA");
 				recipes.activatePanels("Pasta");
 				recipes.Show();
 				frame.dispose();
@@ -2277,6 +2344,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "SANDWICH");
 				recipes.activatePanels("Sandwich");
 				recipes.Show();
 				frame.dispose();
@@ -2468,6 +2536,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "TOFU AND BROCOLLI STIR FRY");
 				recipes.activatePanels("Brocolli");
 				recipes.Show();
 				frame.dispose();
@@ -2660,6 +2729,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "GINISANG UPO");
 				recipes.activatePanels("Upo");
 				recipes.Show();
 				frame.dispose();
@@ -2851,6 +2921,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "SPICY EGGPLANT");
 				recipes.activatePanels("Eggplant");
 				recipes.Show();
 				frame.dispose();
@@ -3042,6 +3113,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "CRISPY SWEET AND SOUR PORK");
 				recipes.activatePanels("Sweet");
 				recipes.Show();
 				frame.dispose();
@@ -3233,6 +3305,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "FRIED EGG");
 				recipes.activatePanels("Egg");
 				recipes.Show();
 				frame.dispose();
@@ -3424,6 +3497,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "CORNEDBEEF WITH EGG");
 				recipes.activatePanels("Beef");
 				recipes.Show();
 				frame.dispose();
@@ -3615,6 +3689,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "FRIED TUNA");
 				recipes.activatePanels("Tuna");
 				recipes.Show();
 				frame.dispose();
@@ -3806,6 +3881,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "CHAO FAN");
 				recipes.activatePanels("Rice");
 				recipes.Show();
 				frame.dispose();		    
@@ -3997,6 +4073,7 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				insertUserDishSelection(userName, "PAKBET");
 				recipes.activatePanels("Pakbet");
 				recipes.Show();
 				frame.dispose();		   
