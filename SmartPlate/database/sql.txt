@@ -57,7 +57,13 @@ INSERT INTO DISH (dish_name, price, image) VALUES
 ('CHAO FAN', 50, NULL),
 ('PAKBET', 150, NULL);
 
-
+CREATE TABLE IF NOT EXISTS UserDishSelections (
+    selection_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    dish_id INT,
+    FOREIGN KEY (user_id) REFERENCES UserAccounts(user_id),
+    FOREIGN KEY (dish_id) REFERENCES DISH(id)
+);
 
 
 
