@@ -173,7 +173,6 @@ public class LoginForm {
                     	JOptionPane.showMessageDialog(frame, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
                         SessionManager.createSession(authenticatedUser);
                         setupProfile profile = new setupProfile(authenticatedUser);
-                        DishManager.updateAllDishImages();
                         profile.Show();
                     	frame.dispose();
 
