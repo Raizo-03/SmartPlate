@@ -39,17 +39,16 @@ public class DishManager {
         updateDishImage("TOKWAT KANGKONG", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\tokwaImage.jpg"));
         updateDishImage("BASIC GINILING", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\ginilingImage.jpg"));
         updateDishImage("QUICK PASTA", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\pastaImage.jpg"));
-        updateDishImage("TOFU AND BROCCOLI STIR FRY", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\broccoliImage.jpg"));
+        updateDishImage("SANDWICH", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\monteImage.jpg"));
+        updateDishImage("TOFU AND BROCOLLI STIR FRY", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\broccoliImage.jpg"));
         updateDishImage("GINISANG UPO", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\upoImage.jpg")); // Assuming this is for GINISANG UPO, adjust if the name is incorrect
         updateDishImage("SPICY EGGPLANT", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\eggplantImage.jpg"));
         updateDishImage("CRISPY SWEET AND SOUR PORK", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\sweetsourImage.jpg"));
         updateDishImage("FRIED EGG", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\eggImage.jpg"));
-        updateDishImage("CORNED BEEF WITH EGG", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\cornedbeefImage.jpg"));
+        updateDishImage("CORNEDBEEF WITH EGG", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\cornedbeefImage.jpg"));
         updateDishImage("FRIED TUNA", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\tunaImage.jpg"));
         updateDishImage("CHAO FAN", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\chaofanImage.jpg"));
         updateDishImage("PAKBET", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\pakbetImage.jpg"));
-        updateDishImage("TOFU AND BROCOLLI STIR FRY", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\broccoliImage.jpg"));
-        updateDishImage("CORNEDBEEF WITH EGG", new File("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\dishes\\cornedbeefImage.jpg"));
 
 
     }
