@@ -49,6 +49,7 @@ public class cookFrame extends loadingDialog{
 	private JRadioButton rdHighProtein, rdHeart, rdVegetarian, rdCalorie, rdBalanced, rdSodium, rdCarbs, rdGluten, rdVita;
 	JProgressBar progressBar;
 	loadingDialog load = new loadingDialog();
+	recipePanels recipes = new recipePanels(currentUser);
 
     
 	/**
@@ -524,6 +525,23 @@ public class cookFrame extends loadingDialog{
 							frame.getContentPane().remove(panel);
 						    frame.revalidate();
 					        frame.repaint();
+				}else if(high_protein == true && heart_healthy == true && vitamins_minerals_focused == true && balanced_nutrition == true && price >= 160 && price <= 180) {
+			       	load.showSuggestingDialog();
+					 ginilingPanel = createGinilingPanel();
+						frame.getContentPane().add(ginilingPanel);
+						frame.getContentPane().remove(budgetPanel);
+						frame.getContentPane().remove(panel);
+					    frame.revalidate();
+				        frame.repaint();
+					 
+				}else {
+			      	load.showSuggestingDialog();
+								 ginilingPanel = createGinilingPanel();
+									frame.getContentPane().add(ginilingPanel);
+									frame.getContentPane().remove(budgetPanel);
+									frame.getContentPane().remove(panel);
+								    frame.revalidate();
+							        frame.repaint();
 				}
 				}
         	
@@ -732,6 +750,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Tofu");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -920,6 +941,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Chopsuey");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -1107,6 +1131,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Creamy");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -1295,6 +1322,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Sinigang");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -1483,6 +1513,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Calamansi");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -1671,6 +1704,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Tokwa");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -1859,6 +1895,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Giniling");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -2047,6 +2086,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Pasta");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -2235,6 +2277,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Sandwich");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -2423,6 +2468,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Brocolli");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -2612,6 +2660,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Upo");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -2800,6 +2851,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Eggplant");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -2988,6 +3042,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Sweet");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -3176,6 +3233,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Egg");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -3364,6 +3424,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Beef");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -3552,6 +3615,9 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
+				recipes.activatePanels("Tuna");
+				recipes.Show();
+				frame.dispose();
 		    }
         	
         });
@@ -3740,7 +3806,10 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
-		    }
+				recipes.activatePanels("Rice");
+				recipes.Show();
+				frame.dispose();		    
+				}
         	
         });
         panel.add(btnCook);
@@ -3928,7 +3997,10 @@ public class cookFrame extends loadingDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
-		    }
+				recipes.activatePanels("Pakbet");
+				recipes.Show();
+				frame.dispose();		   
+				}
         	
         });
         panel.add(btnCook);
