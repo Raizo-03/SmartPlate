@@ -43,6 +43,6 @@ To get a local copy up and running, follow these simple steps:
 We welcome contributions to SmartPlate! If you have suggestions or improvements, please fork the repo and create a pull request. You can also open an issue with the tag "enhancement". Don't forget to give the project a star! Thank you.
 
 ## Contact 📫
-Your Name - buscatoeduardoII@gmail.com
+Email - buscatoeduardoII@gmail.com
 
 Project Link: [https://github.com/Raizo-03/SmartPlate](https://github.com/Raizo-03/SmartPlate)
