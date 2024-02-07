@@ -620,8 +620,7 @@ public class cookFrame extends loadingDialog{
 		            JOptionPane.showMessageDialog(null, "Error: Budget should only contain numeric numbers.", "Input Error", JOptionPane.ERROR_MESSAGE);
 		        }
 				
-				}
-        	
+				}    	
         });
         btnNext.setBounds(786, 704, 106, 52);
         
