@@ -615,12 +615,12 @@ public class cookFrame extends loadingDialog{
 								    frame.revalidate();
 							        frame.repaint();
 				}
-				}catch (NumberFormatException ex) {
+		        }catch (NumberFormatException ex) {
 		            // If parsing fails, show an error message
 		            JOptionPane.showMessageDialog(null, "Error: Budget should only contain numeric numbers.", "Input Error", JOptionPane.ERROR_MESSAGE);
-		       		 }
-			}
-        	
+		        }
+				
+				}    	
         });
         btnNext.setBounds(786, 704, 106, 52);
         
