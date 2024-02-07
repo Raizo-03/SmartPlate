@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/USER/git/SmartPlate/SmartPlate/database/mysql-connector-j-8.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/USER/SmartPlate/SmartPlate/database/mysql-connector-j-8.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
