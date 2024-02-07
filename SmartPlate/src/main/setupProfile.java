@@ -75,6 +75,7 @@ public class setupProfile {
             g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
         }
     }
+    
     //For setting the cooking level
     private void updateCookingLevel(String level) {
         String username = currentUser.getUsername();

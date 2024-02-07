@@ -239,6 +239,15 @@ public class DashboardForm {
         btnHistory.setContentAreaFilled(false);
         btnHistory.setBorderPainted(false);
         btnHistory.setBounds(-32, 240, 175, 191);
+        btnHistory.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				historyFrame history = new historyFrame(currentUser);
+				history.Show();
+				frame.dispose();				
+			}
+        	
+        });
         panel.add(btnHistory);
         
         ImageIcon btnAboutIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnAboutIcon.png");

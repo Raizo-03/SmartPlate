@@ -82,6 +82,10 @@ public class cookFrame extends loadingDialog{
 	        System.out.println("User not authenticated");
 	    }
 	}
+	
+	//Method that inserts the user's dish selection to the table UserDishSelections in the database 
+	//it accepts the username which is the currentUser and the dishName
+	//This is to be called in each panel of the dish
 	private void insertUserDishSelection(String username, String dishName) {
 	    Connection connection = null;
 	    PreparedStatement preparedStatement = null;
@@ -142,7 +146,7 @@ public class cookFrame extends loadingDialog{
 	    }
 	}
 
-	
+	//Method that fetches user's info using the currentUser name
     private void fetchinguserInformation() {
         String username = currentUser.getUsername();
 
@@ -372,9 +376,9 @@ public class cookFrame extends loadingDialog{
 				}else if(rdVita.isSelected()) {
 					vitamins_minerals_focused = true;
 				}				
-			}
-        	
+			}        	
         });
+
         
         panel.add(rdVita); 
         panel.add(rdGluten);
@@ -394,6 +398,8 @@ public class cookFrame extends loadingDialog{
 	}
 	private JPanel createBudgetPanel(boolean low_calorie,boolean vegetarian,boolean low_sodium,
 			boolean high_protein, boolean heart_healthy,boolean balanced_nutrition, boolean low_carb,boolean gluten_free,boolean vitamins_minerals_focused) {
+		
+		
         ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\budgetPanelImage.png");
         panel.setBounds(0, 0, 940, 788);
         panel.setLayout(null);
@@ -439,6 +445,11 @@ public class cookFrame extends loadingDialog{
         btnNext.addActionListener(new ActionListener() {
 
 			@Override
+			
+			//Method for the algorithm for the combinations of the dishes using the boolean value passed from the userPreferencePanel (tags)
+			//to the budgetPanel
+			//It also have a price variable from the txtFieldBudget
+			//If the combinations are exact to the user's preference, it will show the designated panel
 			public void actionPerformed(ActionEvent e) {
 				try {
 				java.lang.String priceT = txtFieldBugdet.getText();
@@ -3692,6 +3703,8 @@ public class cookFrame extends loadingDialog{
         btnCook.addActionListener(new ActionListener() {
 
 			@Override
+			//Method that calls the insertUserDishSelection using the usernanme and string of the dish
+			//This method inserts the transaction to the userdishselection
 			public void actionPerformed(ActionEvent e) {
 				load.showCookingDialog();
 				insertUserDishSelection(userName, "FRIED TUNA");

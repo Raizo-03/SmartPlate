@@ -161,6 +161,8 @@ public class LoginForm {
         btnSignin.addActionListener(new ActionListener() {
             @Override
             
+            //Method that checks the inputted username and password if its in the database: if yes: calls the setupProfile java to be shown, session manager to create a 
+            // session,and drops the current frame
             public void actionPerformed(ActionEvent e) {
                 String username = txtUsername.getText();
                 String password = new String(((JPasswordField) txtPassword).getPassword());
@@ -397,7 +399,8 @@ public class LoginForm {
         	    String name = txtSignUpName.getText();
                 String username = txtSignUpUsername.getText();
                 String password = txtSignPassword.getText();
-
+        //Method that inserts the user's information when signing up: calls the insertUser method to insert the information in database 
+        // and calls the showWelcomePanel
                 
                 if (!txtSignUpName.getText().equals("") && txtSignUpName.getText().matches("^[a-zA-Z\\s]+$") && !txtSignUpEmail.getText().equals("") ) {
             		if (!txtSignUpUsername.getText().equals("")) {
@@ -605,10 +608,11 @@ public class LoginForm {
         return panel;
     }
     
+    //Method that inserts the user's information(email, name, username, password) to the database: 
+    //it also calls the isUsernameTaken which checks if the username is already taken
+    //cals the isEmailTaken to check if the email is already taken
     private boolean insertUser(String email, String name, String username, String password) {
         try {
-            // Use the DatabaseConnection class to obtain a connection
-            DatabaseConnection databaseConnection = new DatabaseConnection();
             Connection connection = DatabaseConnection.getConnection();
 
             // Check if the username already exists
@@ -650,7 +654,7 @@ public class LoginForm {
         return false; // Return false if an exception occurs or the insertion fails
     }
 
-    //Method to check similar username
+    //Method to check similar username in the database
     private boolean isUsernameTaken(Connection connection, String username) throws SQLException {
         // Check if the username already exists in the database
         String query = "SELECT COUNT(*) FROM UserAccounts WHERE username=?";
@@ -681,6 +685,7 @@ public class LoginForm {
         return false;
     }
 	
+    //Method that checks the username and password if its in the database
     private boolean validateLogin(String username, String password) {
         try {
             // Use the DatabaseConnection class to obtain a connection
