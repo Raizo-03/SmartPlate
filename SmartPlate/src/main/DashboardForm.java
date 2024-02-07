@@ -275,6 +275,16 @@ public class DashboardForm {
         btnBudget.setContentAreaFilled(false);
         btnBudget.setBorderPainted(false);
         btnBudget.setBounds(806, 240, 175, 191);
+        btnBudget.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				trackerFrame window = new trackerFrame(currentUser);
+				window.Show();
+				frame.dispose();				
+			}
+        	
+        });
         panel.add(btnBudget);
 
         ImageIcon btnCookIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\btnCookIcon.png");
