@@ -8,10 +8,13 @@ import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,9 +36,20 @@ import main.User;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+
+import com.mysql.cj.jdbc.Blob;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.sql.*;
 
 public class meFrame {
 
@@ -51,6 +65,9 @@ public class meFrame {
     private JTextField txtEmail;
     private JTextField txtSkill;
     private String selectedImagePath = ""; // Add this at the class level
+    private JLabel lblImage;
+    private JPanel panel;
+    private ImageIcon format=null;
 
 	/**
 	 * Launch the application.
@@ -77,43 +94,70 @@ public class meFrame {
 	    currentUser = SessionManager.getCurrentUser();
 	    // Check if the user is authenticated before displaying user info
 	    if (currentUser != null) {
-	        fetchinguserInformation(); // Move fetchinguserInformation() here
+	        fetchinguserInformation();
 	    } else {
 	        // Handle the case when the user is not authenticated
 	        System.out.println("User not authenticated");
 	    }
 	}
 	
-    private void fetchinguserInformation() {
-        String username = currentUser.getUsername();
+	private void fetchinguserInformation() {
+	    String username = currentUser.getUsername();
 
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String sql = "SELECT * FROM UserAccounts WHERE username=?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, username);
+	    try (Connection connection = DatabaseConnection.getConnection()) {
+	        String sql = "SELECT * FROM UserAccounts WHERE username=?";
+	        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+	            preparedStatement.setString(1, username);
 
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        // Retrieve user information from the result set
-                        String name = resultSet.getString("name");
-                        String email = resultSet.getString("email");
-                        String levelU = resultSet.getString("cooking_level");
+	            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+	                if (resultSet.next()) {
+	                    // Retrieve user information from the result set
+	                    String name = resultSet.getString("name");
+	                    String email = resultSet.getString("email");
+	                    String levelU = resultSet.getString("cooking_level");
+	                    Blob blob = (Blob) resultSet.getBlob("profile_picture");
+                        ImageIcon imageIcon = null;
+                        if (blob != null) {
+                            byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+                            imageIcon = new ImageIcon(imageBytes);
+                            Image image = imageIcon.getImage().getScaledInstance(191, 205, Image.SCALE_SMOOTH);
+                            imageIcon = new ImageIcon(image);
+                            lblImage.setIcon(imageIcon);
+                        }else {
+                        	setDefaultImage();
+                        }
+	                    // Now you have the user information
+	                    name = resultSet.getString("name");
+	                    userNplaceholder = name;
+	                    txtName.setText(userNplaceholder); // Update txtName with the user's name
+	                    txtEmail.setText(email); // Update txtEmail with the user's email
+	                    // Handle cooking level text
+	                    
+	                    switch (levelU) {
+	                        case "beginner":
+	                            txtSkill.setText("BEGINNER");
+	                            break;
+	                        case "intermediate":
+	                            txtSkill.setText("INTERMEDIATE");
+	                            break;
+	                        case "advanced":
+	                            txtSkill.setText("ADVANCED");
+	                            break;
+	                    }
+	                }
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	private void setDefaultImage() {
+	    // Optionally, log this event or handle it as per requirement
+	    lblImage.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\defaultImage.png"));
+	    lblImage.revalidate();
+	    lblImage.repaint();
+	}
 
-                        // Now you have the user information
-                        name = resultSet.getString("name");
-                        userNplaceholder = name;
-                        //nameLabel.setVisible(false);
-                        emailU = email;
-                        level = levelU;
-                        // You can update the UI or perform other actions with this information
-                    } else {
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
     private class ImagePanel extends JPanel {
         private BufferedImage image;
 
@@ -144,9 +188,8 @@ public class meFrame {
         frame.setUndecorated(true);
         ImageIcon AppIcon = new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\SmartPlateLogo1.png");
         frame.setIconImage(AppIcon.getImage());
-        
-        
-        ImagePanel panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\meImage.png");
+                
+        panel = new ImagePanel("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\meImage.png");
         panel.setLayout(null);
         panel.setBounds(0, 0, 940, 788);
 		
@@ -185,7 +228,13 @@ public class meFrame {
 
 		        if (confirm == JOptionPane.YES_OPTION) {
 		            // Proceed with the update if the user confirms
-		            boolean imageUpdated = saveImagePathToDatabase();
+		            boolean imageUpdated = false;
+					try {
+						imageUpdated = saveImageToDatabase();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 		            boolean nameUpdated = saveName(); // Assuming saveName() is also adapted to return a boolean
 		            boolean emailUpdated = false;
 					try {
@@ -209,7 +258,7 @@ public class meFrame {
 		
 		
 		
-		JLabel lblImage = new JLabel("");
+		 lblImage = new JLabel("");
 		lblImage.setIcon(new ImageIcon("C:\\Users\\USER\\git\\SmartPlate\\SmartPlate\\Assets\\defaultImage.png"));
 		lblImage.setBounds(119, 251, 191, 205);		
 		JButton btnSetImage = new JButton();
@@ -350,26 +399,12 @@ public class meFrame {
 				e1.printStackTrace();
 			}
 	        
-	        txtName.setText(userNplaceholder); // Set initial placeholder text
-	        // Add a focus listener to handle placeholder behavior
-	        txtName.addFocusListener(new FocusListener() {
-				@Override
-				public void focusGained(FocusEvent e) {
-				    if (txtName.getText().equals(userNplaceholder)) {
-				    	txtName.setText("");
-	                }				
-				}
-				@Override
-				public void focusLost(FocusEvent e) {
-					   if (txtName.getText().isEmpty()) {
-						   txtName.setText(userNplaceholder);
-		                	
-		                }				
-				}
-	        });
+	        txtName.setText(userNplaceholder); 
 		
 		panel.add(btnSave);
 		panel.add(txtName);
+		panel.add(txtEmail);
+		panel.add(txtSkill);
 		panel.add(btnReturn);
 		
 		frame.getContentPane().add(panel);
@@ -390,24 +425,27 @@ public class meFrame {
 			}
 		});		
 	}
-	public boolean saveImagePathToDatabase() {
-	    if (currentUser != null && !selectedImagePath.isEmpty()) {
-	        String sql = "UPDATE UserAccounts SET profile_picture= ? WHERE username = ?";
+	public boolean saveImageToDatabase() throws IOException {
+	    if (currentUser != null && selectedImagePath != null && !selectedImagePath.isEmpty()) {
+	        String sql = "UPDATE UserAccounts SET profile_picture = ? WHERE username = ?";
 
 	        try (Connection connection = DatabaseConnection.getConnection();
-	             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+	             PreparedStatement pstmt = connection.prepareStatement(sql);
+	             FileInputStream fis = new FileInputStream(selectedImagePath)) { // Create a FileInputStream for the image
 
-	            pstmt.setString(1, selectedImagePath);
+	            // Set the binary stream for the profile_picture column
+	            File imageFile = new File(selectedImagePath);
+	            pstmt.setBinaryStream(1, fis, (int) imageFile.length());
 	            pstmt.setString(2, currentUser.getUsername()); // Use username to identify the user
 
 	            int affectedRows = pstmt.executeUpdate();
 	            if (affectedRows > 0) {
-	            	return true;
+	                return true;
 	            } else {
-	            	return false;
+	                return false;
 	            }
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
+	        } catch (SQLException | FileNotFoundException ex) {
+	            ((Throwable) ex).printStackTrace();
 	            JOptionPane.showMessageDialog(null, "Error updating profile picture.");
 	        }
 	    } else {
@@ -415,7 +453,7 @@ public class meFrame {
 	    }
 	    return false;
 	}
-	
+
 	public boolean saveName() {
 	    if (currentUser != null && txtName.getText() != null) {
 	        String sql = "UPDATE UserAccounts SET name= ? WHERE username = ?";
