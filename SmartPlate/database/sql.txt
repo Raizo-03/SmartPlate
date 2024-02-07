@@ -19,7 +19,7 @@ ADD COLUMN cooking_level ENUM('beginner', 'intermediate', 'advanced') DEFAULT 'b
 
 -- Add columns for allergies
 ALTER TABLE UserAccounts
-ADD COLUMN profile_picture BLOB,
+ADD COLUMN profile_picture LONGBLOB,
 ADD COLUMN allergy_milk BOOLEAN DEFAULT FALSE,
 ADD COLUMN allergy_fish BOOLEAN DEFAULT FALSE,
 ADD COLUMN allergy_eggs BOOLEAN DEFAULT FALSE,
@@ -65,7 +65,6 @@ CREATE TABLE IF NOT EXISTS UserDishSelections (
     FOREIGN KEY (user_id) REFERENCES UserAccounts(user_id),
     FOREIGN KEY (dish_id) REFERENCES DISH(id)
 );
-
 
 
 
