@@ -451,6 +451,7 @@ public class cookFrame extends loadingDialog{
 			//It also have a price variable from the txtFieldBudget
 			//If the combinations are exact to the user's preference, it will show the designated panel
 			public void actionPerformed(ActionEvent e) {
+				try {
 				java.lang.String priceT = txtFieldBugdet.getText();
 				int price = Integer.parseInt(priceT);
 		        if (high_protein == true && low_carb == true && vegetarian == true && price >= 200 && price <= 220) {
@@ -614,6 +615,11 @@ public class cookFrame extends loadingDialog{
 								    frame.revalidate();
 							        frame.repaint();
 				}
+		        }catch (NumberFormatException ex) {
+		            // If parsing fails, show an error message
+		            JOptionPane.showMessageDialog(null, "Error: Budget should only contain numeric numbers.", "Input Error", JOptionPane.ERROR_MESSAGE);
+		        }
+				
 				}
         	
         });
