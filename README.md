@@ -33,9 +33,9 @@ Welcome to SmartPlate, the ultimate food randomizer app designed for food enthus
 To get a local copy up and running, follow these simple steps:
 
 1. Clone the repository to your local machine.
-2. Ensure you have Java and MySQL installed and properly set up.
+2. Ensure you have Java and MySQL(XAMPP) installed and properly set up.
 3. Import the project into your favorite IDE (e.g., Eclipse, IntelliJ).
-4. Set up your MySQL database using the schema provided in the database folder.
+4. Set up your MySQL database using the schema provided in the database folder || change ports if needed: default- 3306.
 5. Configure the database connection details in the application || configure the filepaths for the images in assets.
 6. Run the application from the main class - LoginForm.java.
 
